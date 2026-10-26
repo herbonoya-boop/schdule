@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026 조직진단 디브리핑 일정</title>
+<style>
+:root{--ink:#1c1c1e;--navy:#050038;--gray:#6b6f7e;--line:#e0e2e8;--soft:#f7f8fa;--blue:#4262ff;--yellow:#ffd02f}*{box-sizing:border-box}body{margin:0;background:#f7f8fa;color:var(--ink);font-family:'Roobert PRO','Pretendard','Noto Sans KR',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #9badff;outline-offset:3px}.top{background:#fff;border-bottom:1px solid #eef0f3}.top-inner{max-width:1100px;margin:auto;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:14px;color:var(--navy)}.brandmark{width:28px;height:28px;background:var(--yellow);border-radius:8px;display:grid;place-items:center;color:#111;font-size:16px}.topmeta{color:var(--gray);font-size:12px}.wrap{max-width:1030px;margin:0 auto;padding:48px 28px 80px}.intro{margin-bottom:30px}.eyebrow{font-size:12px;letter-spacing:1.1px;color:#555a6a;font-weight:600;margin:0 0 11px}.intro h1{font-size:34px;letter-spacing:-1.3px;font-weight:600;line-height:1.25;margin:0;color:var(--navy)}.intro p{margin:12px 0 0;color:var(--gray);line-height:1.7}.workspace{display:grid;grid-template-columns:1fr 258px;gap:20px;align-items:start}.card{background:#fff;border:1px solid #eef0f3;border-radius:18px}.main{padding:32px}.stephead{display:flex;justify-content:space-between;align-items:center;gap:12px}.step-label{font-size:12px;font-weight:600;color:#555a6a}.counter{font-size:12px;color:#8e91a0}.track{height:4px;background:#eef0f3;border-radius:12px;overflow:hidden;margin:16px 0 37px}.bar{height:100%;background:var(--navy);width:20%;transition:width .25s}.question{font-size:26px;letter-spacing:-.8px;font-weight:600;color:var(--navy);line-height:1.3;margin:0 0 10px}.hint{font-size:14px;color:var(--gray);margin:0 0 28px;line-height:1.65}.fieldlabel{display:block;font-weight:600;margin-bottom:11px;font-size:13px}.company-input{width:100%;border:1px solid #c7cad5;border-radius:9px;padding:13px 15px;height:50px;background:#fff}.company-input:focus{outline:2px solid var(--blue);border-color:transparent}.example{color:#8e91a0;font-size:12px;line-height:1.7;margin-top:10px}.calendar-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 16px}.calendar-title{font-size:18px;font-weight:600;letter-spacing:-.4px}.calendar-legend{display:flex;gap:12px;align-items:center;color:#6b6f7e;font-size:11px}.dot{display:inline-block;width:12px;height:12px;border:2px dashed #8e91a0;border-radius:3px;vertical-align:-2px;margin-right:4px}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.weekday{text-align:center;color:#8e91a0;font-size:12px;padding:10px 0}.day{border:1px solid #e0e2e8;border-radius:10px;background:white;min-height:69px;text-align:left;padding:10px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;transition:.15s}.day:not(:disabled):hover{border-color:var(--blue);background:#f9faff}.day:disabled{border:1px solid #f2f2f3;background:#fafafb;color:#bcc0c7;cursor:default}.day.active{background:#f3f5ff;border:2px solid var(--blue);padding:9px;color:var(--blue);font-weight:600}.day small{font-size:10px;color:#9297a1}.day .picked{color:#4262ff}.times{margin-top:25px;border-top:1px solid #eef0f3;padding-top:22px}.time-title{font-size:14px;font-weight:600;margin:0 0 13px}.timegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.time{border:1px solid #e0e2e8;background:white;border-radius:9px;padding:12px 5px;min-height:46px;color:#2c2c34}.time.taken{border:2px dashed #a5a8b5;padding:11px 4px}.time.active{background:var(--navy);border:1px solid var(--navy);color:#fff}.time.taken.active{border:2px solid var(--navy);padding:11px 4px}.legendnote{font-size:12px;color:#6b6f7e;line-height:1.6;margin:14px 0 0}.actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:32px}.btn{border-radius:999px;border:1px solid #c7cad5;background:#fff;color:#1c1c1e;padding:13px 23px;font-weight:600;font-size:14px;min-height:46px}.btn.primary{background:#1c1c1e;color:#fff;border-color:#1c1c1e}.btn:disabled{background:#e0e2e8;border-color:#e0e2e8;color:#a5a8b5;cursor:not-allowed}.sidebar{padding:25px 22px}.sidetitle{font-size:15px;font-weight:600;margin:0 0 18px}.sideinfo{border-top:1px solid #eef0f3;padding:16px 0}.sideinfo:first-of-type{border-top:0;padding-top:0}.sidekey{font-size:12px;color:#8e91a0;margin-bottom:7px}.sidevalue{font-size:14px;font-weight:500;line-height:1.5;overflow-wrap:anywhere}.rankline{display:flex;align-items:flex-start;gap:10px;margin:16px 0}.rankchip{width:23px;height:23px;flex-shrink:0;background:#f1f2f6;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:600}.rankdate{font-size:13px;line-height:1.65}.muted{color:#a5a8b5}.note{margin-top:17px;padding:15px;border-radius:10px;background:#fafbfc;color:#6b6f7e;font-size:12px;line-height:1.7}.review{display:grid;gap:10px}.reviewrow{padding:17px 19px;border:1px solid #e0e2e8;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}.reviewrow strong{font-size:13px}.reviewrow span{font-size:14px;color:#555a6a}.success{background:#f1fbf6;border:1px solid #c8e8d6;border-radius:14px;padding:23px;margin-top:18px}.success strong{color:#187574}.success p{margin-bottom:0;line-height:1.7;color:#555a6a;font-size:13px}@media(max-width:790px){.workspace{grid-template-columns:1fr}.sidebar{order:2}.main{padding:24px}.wrap{padding:34px 16px 50px}.intro h1{font-size:27px}.question{font-size:23px}.top-inner{padding:17px}.topmeta{display:none}}@media(max-width:430px){.day{min-height:55px;padding:7px;font-size:12px}.day.active{padding:6px}.calendar{gap:4px}.day small{font-size:9px}.timegrid{grid-template-columns:repeat(3,1fr)}.main{padding:18px}.calendar-legend{font-size:10px}.intro p{font-size:13px}.actions{margin-top:24px}}
+
+/* 달력 + 인접 시간 선택 패널 */
+.calendar-layout{display:grid;grid-template-columns:minmax(0,1fr) 184px;gap:12px;align-items:start}
+.calendar-column{min-width:0}
+.calendar{gap:5px}
+.day{min-height:58px;padding:8px}
+.day.active{padding:7px}
+.times{margin:0;padding:13px;border:1px solid #e0e2e8;border-radius:12px;background:#fafbfc;min-height:0;position:sticky;top:18px}
+.times.empty{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.time-title{font-size:13px;margin:0 0 5px}
+.time-subtitle{font-size:12px;color:#6b6f7e;line-height:1.5;margin:0 0 10px}
+.timegrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.time{min-height:34px;padding:5px 2px;font-size:12px}
+.time.taken,.time.taken.active{padding:4px 1px}
+.times .legendnote{font-size:11px}
+@media(max-width:1080px){.workspace{grid-template-columns:1fr}.sidebar{order:2}}
+@media(max-width:640px){.calendar-layout{grid-template-columns:1fr}.times{position:static;min-height:0;padding:14px}.times.empty{min-height:100px}.timegrid{grid-template-columns:repeat(3,1fr)}.day{min-height:55px;padding:7px}.day.active{padding:6px}}
+
+/* 100% zoom desktop: 한 화면 안에 달력, 시간, 진행 버튼을 배치 */
+@media (min-width: 900px) {
+  .top-inner{max-width:1240px;padding:10px 24px;min-height:52px}
+  .wrap{max-width:1240px;padding:20px 24px 16px}
+  .intro{margin-bottom:16px}
+  .eyebrow{margin-bottom:4px;font-size:10px}
+  .intro h1{font-size:27px;letter-spacing:-.75px;line-height:1.2}
+  .intro p{margin-top:5px;font-size:12px;line-height:1.4}
+  .workspace{grid-template-columns:minmax(0,1fr) 230px;gap:14px}
+  .main{padding:20px 22px 18px}
+  .sidebar{padding:18px 17px}
+  .sidetitle{margin-bottom:10px}
+  .sideinfo{padding:11px 0}
+  .rankline{margin:10px 0}
+  .note{padding:10px;margin-top:10px;font-size:11px;line-height:1.45}
+  .track{margin:10px 0 18px}
+  .question{font-size:21px;margin-bottom:5px}
+  .hint{font-size:12px;line-height:1.4;margin-bottom:15px}
+  .calendar-layout{grid-template-columns:minmax(0,1fr) 190px;gap:14px}
+  .calendar-head{margin-bottom:9px}
+  .calendar-title{font-size:15px}
+  .calendar{gap:4px}
+  .weekday{padding:5px 0;font-size:11px}
+  .day{min-height:43px;padding:5px 7px;border-radius:7px;font-size:13px}
+  .day.active{padding:4px 6px}
+  .day small{font-size:9px}
+  .times{padding:11px;border-radius:10px}
+  .timegrid{gap:5px}
+  .time{min-height:33px;font-size:11px}
+  .time-title{font-size:12px}
+  .time-subtitle{font-size:11px;margin-bottom:7px}
+  .times .legendnote{font-size:10px;line-height:1.4;margin-top:8px}
+  .actions{margin-top:16px}
+  .btn{min-height:38px;padding:9px 18px;font-size:12px}
+  .reviewrow{padding:12px 15px}
+  .fieldlabel{margin-bottom:7px}
+}
+/* 시간 패널이 날짜 선택과 함께 등장하는 효과 */
+.times{transform-origin:top left;animation:time-panel-in .28s cubic-bezier(.2,.8,.2,1) both}
+@keyframes time-panel-in{from{opacity:0;transform:translateX(12px) scale(.985)}to{opacity:1;transform:translateX(0) scale(1)}}
+.day.active{transition:background .18s,border-color .18s,box-shadow .18s;box-shadow:0 0 0 3px rgba(66,98,255,.09)}
+.timegrid .time{animation:time-item-in .22s ease both}
+.timegrid .time:nth-child(2){animation-delay:25ms}.timegrid .time:nth-child(3){animation-delay:45ms}.timegrid .time:nth-child(4){animation-delay:65ms}.timegrid .time:nth-child(5){animation-delay:85ms}.timegrid .time:nth-child(6){animation-delay:105ms}.timegrid .time:nth-child(7){animation-delay:125ms}.timegrid .time:nth-child(8){animation-delay:145ms}.timegrid .time:nth-child(9){animation-delay:165ms}
+@keyframes time-item-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.times,.timegrid .time{animation:none}.day.active{transition:none}}
+@media (max-width:899px) and (min-width:641px){.wrap{padding:22px 18px}.intro{margin-bottom:18px}.main{padding:22px}.track{margin:12px 0 20px}.hint{margin-bottom:18px}.actions{margin-top:18px}}
+@media (max-width:640px){.times{animation:mobile-panel-in .25s ease both}@keyframes mobile-panel-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}}
+@media (max-height:720px) and (min-width:900px){.top-inner{min-height:46px;padding:8px 24px}.wrap{padding-top:12px}.intro{margin-bottom:11px}.intro h1{font-size:24px}.main{padding:15px 19px}.track{margin:7px 0 13px}.hint{margin-bottom:10px}.day{min-height:38px}.weekday{padding:3px 0}.actions{margin-top:12px}}
+
+/* 모바일 너비에 맞춘 중앙 정렬 레이아웃 (데스크톱에서도 동일한 폭) */
+html{overflow-x:hidden}
+body{min-width:320px}
+.top-inner,.wrap{width:100%;max-width:540px;margin-inline:auto}
+.top-inner{padding:13px 22px;min-height:56px}
+.wrap{padding:26px 16px 36px}
+.intro{margin-bottom:20px}
+.intro h1{font-size:25px;line-height:1.3;letter-spacing:-.8px}
+.intro p{font-size:12px;line-height:1.5;margin-top:7px}
+.workspace{display:flex;flex-direction:column;gap:12px}
+.main,.sidebar{width:100%;min-width:0}
+.main{padding:23px 20px 19px}
+.sidebar{padding:20px}
+.track{margin:12px 0 24px}
+.question{font-size:21px;line-height:1.35}
+.hint{font-size:12px;line-height:1.55;margin-bottom:19px}
+.calendar-layout{display:grid;grid-template-columns:minmax(0,1fr) 142px;gap:9px;align-items:start}
+.calendar-head{margin-bottom:8px;gap:5px}
+.calendar-title{font-size:13px;letter-spacing:-.2px}
+.calendar-legend{font-size:10px}
+.calendar{gap:3px}
+.weekday{padding:5px 0;font-size:10px}
+.day{min-height:44px;border-radius:6px;padding:5px 4px;font-size:12px}
+.day.active{padding:4px 3px}
+.day small{font-size:8px;letter-spacing:-.3px}
+.times{position:static;margin:0;padding:10px 8px;border-radius:9px;min-width:0}
+.time-title{font-size:11px;line-height:1.4}
+.time-subtitle{font-size:10px;line-height:1.45;margin-bottom:8px}
+.timegrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.time{min-height:32px;padding:5px 1px;font-size:10px;border-radius:6px}
+.time.taken,.time.taken.active{padding:4px 0}
+.times .legendnote{font-size:9px;margin-top:7px;line-height:1.4}
+.actions{margin-top:23px}
+.btn{min-height:42px;padding:10px 16px;font-size:12px}
+.sidebar .note{font-size:11px}
+@media(min-width:900px){
+ .top-inner{max-width:540px;padding:13px 22px;min-height:56px}
+ .wrap{max-width:540px;padding:26px 16px 36px}
+ .intro{margin-bottom:20px}
+ .intro h1{font-size:25px}
+ .workspace{display:flex;flex-direction:column;gap:12px}
+ .main{padding:23px 20px 19px}
+ .sidebar{padding:20px}
+ .track{margin:12px 0 24px}
+ .question{font-size:21px}
+ .hint{margin-bottom:19px}
+ .calendar-layout{grid-template-columns:minmax(0,1fr) 142px;gap:9px}
+ .calendar-head{margin-bottom:8px}
+ .calendar-title{font-size:13px}
+ .calendar{gap:3px}
+ .weekday{padding:5px 0;font-size:10px}
+ .day{min-height:44px;padding:5px 4px;font-size:12px}
+ .day.active{padding:4px 3px}
+ .times{padding:10px 8px}
+ .timegrid{gap:4px}
+ .time{min-height:32px;font-size:10px}
+ .time-title{font-size:11px}
+ .time-subtitle{font-size:10px;margin-bottom:8px}
+ .actions{margin-top:23px}
+ .btn{min-height:42px;padding:10px 16px;font-size:12px}
+}
+@media(max-width:640px){
+ .calendar-layout{grid-template-columns:minmax(0,1fr) 142px;gap:9px}
+ .times{padding:10px 8px}
+ .timegrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .main{padding:20px 16px}
+ .day{min-height:43px;padding:5px 3px}
+ .day.active{padding:4px 2px}
+}
+@media(max-width:390px){
+ .wrap{padding-inline:9px}
+ .main{padding:18px 11px}
+ .calendar-layout{grid-template-columns:minmax(0,1fr) 119px;gap:6px}
+ .day{min-height:39px;padding:4px 2px;font-size:11px}
+ .day.active{padding:3px 1px}
+ .day small{font-size:7px}
+ .times{padding:8px 5px}
+ .time{font-size:9px;min-height:30px}
+ .calendar-title{font-size:12px}
+ .calendar-legend{font-size:9px}
+}
+
+/* 보고 안내: 모바일 크기의 차분한 비즈니스 정보 카드 */
+.briefing-info{background:#fff;border:1px solid #e0e2e8;border-radius:12px;margin-top:16px;padding:4px 15px}
+.briefing-row{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;align-items:start;padding:11px 0;border-bottom:1px solid #eef0f3}
+.briefing-row:last-child{border-bottom:0}
+.briefing-label{font-size:12px;font-weight:600;color:#555a6a;white-space:nowrap}
+.briefing-value{font-size:12px;line-height:1.65;color:#1c1c1e;overflow-wrap:break-word}
+.intro .briefing-request{margin-top:12px;font-size:12px;color:#555a6a;line-height:1.55}
+@media(max-width:390px){.briefing-info{padding-inline:11px}.briefing-row{grid-template-columns:62px minmax(0,1fr);gap:9px}}
+/* 응답 현황 내 회사명 가로 배치 및 참고사항 글머리기호 */
+.sidebar .company-inline{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sidebar .company-inline .sidekey{margin:0;flex:0 0 auto}
+.sidebar .company-inline .sidevalue{min-width:0;flex:1 1 auto}
+.notice-list{margin:0;padding-left:17px;list-style-type:disc}
+.notice-list li{padding-left:2px;line-height:1.6}
+.notice-list li+li{margin-top:7px}
+.preview-disclaimer{color:#8e91a0;font-size:10px;line-height:1.55;margin:12px 1px 0}
+</style></head><body><header class="top"><div class="top-inner"><div class="brand"><span class="brandmark">▦</span><span>조직진단 디브리핑 · 일정 회신</span></div><div class="topmeta">2026. 11. 02. — 11. 20. / 평일 15일</div></div></header><main class="wrap"><div class="intro"><p class="eyebrow">SCHEDULE COORDINATION · 2026</p><h1>2026 조직진단 디브리핑 일정</h1><p>2026년 8월에 실시한 「2026 동아쏘시오그룹 조직진단」의 결과를 보고드리고자 합니다.</p>
+<div class="briefing-info" aria-label="디브리핑 안내">
+ <div class="briefing-row"><span class="briefing-label">보고 목적</span><span class="briefing-value">2026 동아쏘시오그룹 조직진단 결과 디브리핑</span></div>
+ <div class="briefing-row"><span class="briefing-label">보고 내용</span><span class="briefing-value">조직진단 분석결과, 원인탐색결과, 개선활동 제안</span></div>
+ <div class="briefing-row"><span class="briefing-label">보고 시간</span><span class="briefing-value">약 1시간 내외</span></div>
+</div>
+<p class="briefing-request">아래에서 희망하시는 일정과 시간을 1순위부터 3순위까지 선택해 주시기 바랍니다.</p></div><div class="workspace"><section class="card main"><div class="stephead"><span class="step-label" id="stepLabel">STEP 01</span><span class="counter" id="count">1 / 5</span></div><div class="track"><div class="bar" id="progress"></div></div><div id="content"></div><div class="actions"><button type="button" class="btn" id="back">이전 단계</button><button type="button" class="btn primary" id="next">다음 단계 →</button></div></section><aside class="card sidebar"><h2 class="sidetitle">응답 현황</h2><div class="sideinfo company-inline"><span class="sidekey">회사명</span><span class="sidevalue" id="sideCompany">선택 전</span></div><div class="sideinfo"><div class="sidekey">희망 일정</div><div id="ranks"></div></div><div class="note" aria-label="참고사항"><ul class="notice-list"><li>타사에는 회사명을 공개하지 않습니다.</li><li>점선으로 표기한 시간도 선택 가능하나, 추후에 조정이 있을 수 있습니다.</li></ul></div></aside></div></main>
+<script>
+(()=>{'use strict';const KEY='deb2026_wizard_demo_v1',TIMES=['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'],COMPANIES=['동아제약','동아에스티','비티젠','에스티팜','동아 오츠카','용마로지스','동아참메드','동아 에코팩','한국신동공업','아벤종합건설','앱티스'];const occupied=new Set(['3|10:00','5|14:00','10|11:00','13|15:00','18|14:00']);let step=0,company='',picks=[null,null,null],selectedDay=null,completed=false;try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x){company=COMPANIES.includes(x.company)?x.company:'';picks=Array.isArray(x.picks)?x.picks.slice(0,3):picks}}catch(e){}const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const weekday=d=>new Date(2026,10,d).getDay();const active=d=>d>=2&&d<=20&&weekday(d)>0&&weekday(d)<6;const fmt=p=>p?`11월 ${p.day}일 (${['일','월','화','수','목','금','토'][weekday(p.day)]}) · ${p.time}`:'아직 선택하지 않았습니다';const save=()=>localStorage.setItem(KEY,JSON.stringify({company,picks}));function summary(){ $('sideCompany').textContent=company.trim()||'선택 전';$('ranks').innerHTML=picks.map((p,i)=>`<div class="rankline"><span class="rankchip">${i+1}</span><span class="rankdate ${p?'':'muted'}">${esc(fmt(p))}</span></div>`).join('')};function render(){const title=step===0?'회사를 선택해 주세요.':step<4?`${step}순위 일정과 시간을 선택해 주세요.`:'선택하신 일정을 확인해 주세요.';const hint=step===0?'일정 회신을 진행할 계열사를 선택해 주세요.':step<4?'달력에서 날짜를 누르면 오른쪽에 해당 날짜의 시간이 나타납니다. 원하는 시간을 선택해 주세요.':'회신 내용이 정확한지 확인한 후 제출해 주세요.';$('stepLabel').textContent='STEP '+String(step+1).padStart(2,'0');$('count').textContent=`${step+1} / 5`;$('progress').style.width=`${(step+1)*20}%`;let html=`<h2 class="question">${title}</h2><p class="hint">${hint}</p>`;if(step===0){html+=`<label class="fieldlabel" for="company">회사명</label><select id="company" class="company-input" required><option value="">회사를 선택해 주세요</option>${COMPANIES.map(c=>`<option value="${esc(c)}" ${company===c?'selected':''}>${esc(c)}</option>`).join('')}</select><p class="example">선택한 회사명을 확인한 후 다음 단계로 진행해 주세요.</p>`}else if(step<4){const index=step-1;const chosen=picks[index];const day=selectedDay??chosen?.day??null;html+=`<div class="calendar-layout"><div class="calendar-column"><div class="calendar-head"><span class="calendar-title">2026년 11월</span><span class="calendar-legend"><span><i class="dot"></i>타사 선택</span></span></div><div class="calendar">`;['일','월','화','수','목','금','토'].forEach(x=>html+=`<div class="weekday">${x}</div>`);for(let d=1;d<=35;d++){if(d>30){html+='<div></div>';continue}const ok=active(d),mine=day===d;html+=`<button type="button" class="day ${mine?'active':''}" data-day="${d}" ${ok?'':'disabled'} aria-pressed="${mine}"><span>${d}</span>${ok?`<small class="${mine?'picked':''}">${mine?'선택일':'선택 가능'}</small>`:''}</button>`}html+='</div></div>';if(day){html+=`<div class="times" role="region" aria-label="선택한 날짜의 시간 목록"><p class="time-title">11월 ${day}일 · 시간 선택</p><p class="time-subtitle">09:00~17:00 중 선택해 주세요.</p><div class="timegrid">`;for(const t of TIMES){const busy=occupied.has(`${day}|${t}`),isPicked=chosen?.day===day&&chosen?.time===t;const used=picks.some((p,j)=>j!==index&&p?.day===day&&p?.time===t);html+=`<button type="button" data-time="${t}" class="time ${busy?'taken':''} ${isPicked?'active':''}" ${used?'disabled title="다른 순위에 이미 선택한 시간"':''} aria-pressed="${isPicked}">${t}</button>`}html+='</div><p class="legendnote">점선은 다른 회사가 선택한 시간입니다. 해당 시간도 선택 가능합니다.</p></div>'}else html+='<div class="times empty"><p class="time-title">시간 선택</p><p class="time-subtitle">왼쪽 달력에서 희망 날짜를 선택해 주세요.<br>09:00~17:00 시간이 이곳에 표시됩니다.</p></div>';html+='</div>'}else{html+='<div class="review"><div class="reviewrow"><strong>회사명</strong><span>'+esc(company)+'</span></div>'+picks.map((p,i)=>`<div class="reviewrow"><strong>${i+1}순위</strong><span>${esc(fmt(p))}</span></div>`).join('')+'</div>';if(completed)html+='<div class="success"><strong>회신 내용이 브라우저에 저장되었습니다.</strong><p>이 버전은 프론트엔드 미리보기입니다. 실제 제출 및 회사 간 공유에는 서버 연동이 필요합니다.</p></div>'} $('content').innerHTML=html;const back=$('back'),next=$('next');back.style.visibility=step===0?'hidden':'visible';next.textContent=step===4?(completed?'다시 수정하기':'회신 제출 (미리보기)'):'다음 단계 →';next.disabled=step===0?!company.trim():step<4?!picks[step-1]:false;if(step===0){$('company').addEventListener('change',e=>{company=e.target.value;save();summary();next.disabled=!company.trim()})}if(step>0&&step<4){$('content').querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selectedDay=Number(b.dataset.day);render()});$('content').querySelectorAll('[data-time]').forEach(b=>b.onclick=()=>{const i=step-1;picks[i]={day:selectedDay??picks[i]?.day,time:b.dataset.time};completed=false;save();render()})}summary()};$('back').onclick=()=>{completed=false;step=Math.max(step-1,0);selectedDay=null;render()};$('next').onclick=()=>{if(step===4){if(completed){step=0;completed=false}else{completed=true;save()}render();return}if(step===0&&!company.trim())return;if(step>=1&&step<=3&&!picks[step-1])return;step++;selectedDay=null;render()};render()})();
+</script></body></html>
