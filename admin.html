@@ -1,14 +1,42 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026 조직진단 디브리핑 일정 | 관리자 (2026-10-27 v4)</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026 조직진단 디브리핑 일정 | 관리자 (2026-10-27 v5)</title>
 <style>
 :root{--ink:#1c1c1e;--navy:#050038;--line:#e0e2e8;--muted:#6b6f7e;--bg:#f7f8fa;--blue:#4262ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Pretendard,'Noto Sans KR',system-ui,sans-serif}button,input,select{font:inherit}.company-filter{min-width:180px;max-width:260px;padding:10px 36px 10px 14px;border-radius:999px;background:#fff;border:1px solid #c7cad5;color:var(--ink);cursor:pointer}.company-filter:focus{outline:2px solid var(--blue);outline-offset:2px}button{cursor:pointer}.shell{max-width:1280px;margin:auto;padding:32px 28px 90px}.header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.eyebrow{font-size:11px;color:var(--muted);letter-spacing:1px}.header h1{font-size:26px;margin:5px 0;font-weight:600;letter-spacing:-.8px;color:var(--navy)}.muted{color:var(--muted)}.card{background:#fff;border:1px solid #e9ebf0;border-radius:16px;padding:22px}.login{max-width:420px;margin:12vh auto}.login h2{margin-top:0}.field{display:block;width:100%;border:1px solid #c7cad5;border-radius:8px;padding:12px;margin:9px 0}.btn{background:#1c1c1e;border:0;color:#fff;border-radius:999px;padding:11px 20px}.btn.secondary{background:white;color:#1c1c1e;border:1px solid #c7cad5}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}.briefing-meta{display:flex;gap:14px 28px;flex-wrap:wrap;margin-bottom:16px;font-size:13px}.briefing-meta strong{margin-right:10px;color:var(--navy)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.stat .num{font-size:30px;font-weight:600;color:var(--navy)}.board{overflow-x:auto}.weekdays,.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;min-width:920px}.weekday{text-align:center;padding:9px;color:#777;font-weight:600}.day{background:#fff;border:1px solid #e0e2e8;border-radius:12px;min-height:175px;padding:10px;overflow:hidden}.day.off{background:#f1f2f5;color:#a3a5b0}.day strong{display:block;font-size:14px;margin-bottom:7px}.slot{padding:7px;border-radius:7px;background:#f5f6fa;margin:5px 0;font-size:12px;border-left:3px solid #c5cbd9}.slot.rank1{border-left-color:#4262ff}.slot.rank2{border-left-color:#0fbcb0}.slot.rank3{border-left-color:#f1a74d}.slot .tm{font-weight:700}.slot .corp{font-weight:600;overflow-wrap:anywhere}.pill{font-size:10px;background:white;border:1px solid #d9dce3;border-radius:5px;padding:1px 5px;white-space:nowrap}.table-wrap{overflow:auto;margin-top:20px}.live-list{margin-top:20px}.live-list table{min-width:680px}.state-good{color:#187574;font-weight:600}.state-wait{color:#777}.slot-count{font-size:10px;background:#e9edf8;border-radius:999px;padding:2px 7px;color:#354577}.live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#187574}.live-indicator:before{content:"";background:#00b473;width:7px;height:7px;border-radius:50%}table{border-collapse:collapse;width:100%;min-width:820px}th,td{border-bottom:1px solid #e9ebf0;padding:12px 10px;text-align:left}th{color:#676c7d;font-size:12px;background:#fafbfc}#app{display:none}#status{font-size:12px;color:#555a6a}.error{color:#aa2222;font-size:13px;min-height:18px}.empty{color:#9a9da9;font-size:12px;margin-top:12px}.legend{display:flex;gap:12px;flex-wrap:wrap}.tiny{font-size:12px}@media(max-width:700px){.shell{padding:22px 12px}.header h1{font-size:22px}.stats{grid-template-columns:repeat(3,1fr)}.stat{padding:12px}.stat .num{font-size:24px}}
 </style></head><body><main class="shell">
-<header class="header"><div><div class="eyebrow">DONG-A SOCIO GROUP · ADMIN</div><h1>2026 조직진단 디브리핑 일정</h1><div class="muted">관리자 전용 · 전체 회사 희망 일정 현황 · 버전 2026.10.27-v4</div></div><button id="logout" class="btn secondary" style="display:none">로그아웃</button></header>
+<header class="header"><div><div class="eyebrow">DONG-A SOCIO GROUP · ADMIN</div><h1>2026 조직진단 디브리핑 일정</h1><div class="muted">관리자 전용 · 전체 회사 희망 일정 현황 · 버전 2026.10.27-v5</div></div><button id="logout" class="btn secondary" style="display:none">로그아웃</button></header>
 <section id="login" class="card login"><h2>관리자 로그인</h2><p class="muted">승인된 관리자 계정만 전체 일정을 확인할 수 있습니다.</p><div id="loginForm"><label>이메일<input class="field" id="email" type="email" required autocomplete="username"></label><label>비밀번호<input class="field" id="password" type="password" required autocomplete="current-password"></label><button class="btn" id="loginSubmit" type="button">로그인</button><p id="loginError" class="error" role="alert"></p></div></section>
 <section id="app"><div class="card briefing-meta"><span><strong>보고 시간</strong> 30분 ~ 1시간</span><span><strong>신청 가능 일정</strong> 2026년 11월 3·4·9·10·11·12·13일</span></div><div class="stats"><div class="card stat"><div class="muted">회신 회사</div><div class="num" id="responded">0 / 11</div></div><div class="card stat"><div class="muted">미회신 회사</div><div class="num" id="pending">11</div></div><div class="card stat"><div class="muted">희망 일정 수</div><div class="num" id="count">0</div></div></div>
 <div class="card"><div class="toolbar"><div><h2 style="margin:0">2026년 11월 3~13일 · 신청 캘린더</h2><div id="status">데이터 불러오는 중…</div></div><div class="legend"><label for="companyFilter" class="tiny muted" style="align-self:center">회사명</label><select id="companyFilter" class="company-filter" aria-label="회사명 필터"><option value="">전체 회사</option></select><span>🔵 1순위</span><span>🟢 2순위</span><span>🟠 3순위</span><button id="refresh" class="btn secondary">새로고침</button></div></div><div class="board"><div class="weekdays" id="weekdays"></div><div class="cal" id="cal"></div></div><p class="tiny muted">신청 가능: 2026년 11월 3~13일 중 5·6일 및 주말 제외 (총 7일). 동시에 같은 날짜·시간을 선택한 회사는 모두 표시됩니다.</p></div>
 <div class="card live-list table-wrap"><div class="toolbar"><h2 style="margin:0">날짜·시간별 신청 상세</h2><span class="live-indicator">자동 갱신 중</span></div><table><thead><tr><th>날짜</th><th>요일</th><th>시간</th><th>회사명</th><th>희망 순위</th></tr></thead><tbody id="detailRows"></tbody></table></div>
 <div class="card table-wrap"><h2>회사별 회신 현황</h2><table><thead><tr><th>회사명</th><th>1순위</th><th>2순위</th><th>3순위</th><th>최종 제출</th><th>상태</th></tr></thead><tbody id="rows"></tbody></table></div></section></main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+<script>
+// Two independent CDNs; do not begin the app until the client library is ready.
+window.__supabaseLoadErrors = [];
+const LIBRARIES = [
+  'https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js',
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js'
+];
+function loadSupabaseLibrary(i=0) {
+  if (window.supabase && typeof window.supabase.createClient === 'function') {
+    window.startDebriefAdmin();
+    return;
+  }
+  if (i>=LIBRARIES.length) {
+    const el=document.getElementById('loginError');
+    el.textContent='Supabase 라이브러리를 불러오지 못했습니다. 브라우저의 추적 방지/광고 차단 설정 또는 회사 네트워크에서 unpkg.com, cdn.jsdelivr.net 접근을 확인해 주세요.';
+    console.error('Supabase CDN loading failed',window.__supabaseLoadErrors);
+    return;
+  }
+  const sc=document.createElement('script');
+  sc.src=LIBRARIES[i];
+  sc.onload=()=>{
+    if(window.supabase && typeof window.supabase.createClient==='function') window.startDebriefAdmin();
+    else {window.__supabaseLoadErrors.push('No UMD export: '+sc.src);loadSupabaseLibrary(i+1)}
+  };
+  sc.onerror=()=>{window.__supabaseLoadErrors.push('Network failed: '+sc.src);loadSupabaseLibrary(i+1)};
+  document.head.appendChild(sc);
+}
+</script><script>
+window.startDebriefAdmin = function startDebriefAdmin(){
 const URL='https://evrawzvpnpoycknoadbq.supabase.co',KEY='sb_publishable_kQL9FANhvvov8t-nwG6sOw_F57tItPP';
 const names=['동아제약','동아에스티','비티젠','에스티팜','동아 오츠카','용마로지스','동아참메드','동아 에코팩','한국신동공업','아벤종합건설','앱티스'];
 let db=null,channel=null,timer=null,allResponses=[];
@@ -97,7 +125,7 @@ for(const field of [$('email'),$('password')]) {
   });
 }
 // 배포 확인을 위한 버전 식별자
-console.info('admin version: 2026-10-27 v4; URL host:', new URL(URL).host);
+console.info('admin version: 2026-10-27 v5; URL host:', new URL(URL).host);
 $('logout').onclick=async()=>{
   try {
     if(channel){await db.removeChannel(channel);channel=null}
@@ -107,4 +135,6 @@ $('logout').onclick=async()=>{
 };
 $('refresh').onclick=()=>load().catch(e=>{$('status').textContent='갱신 오류: '+e.message});
 if(!db){$('loginError').textContent='서버 연결 오류: '+(clientError||'연결 설정을 확인해 주세요.');} else {enter().catch(e=>{$('loginError').textContent='초기화 오류: '+e.message});}
+};
+window.loadSupabaseLibrary();
 </script></body></html>
