@@ -22,8 +22,69 @@ let cal='';for(let d=1;d<=35;d++){if(d>30){cal+='<div></div>';continue}const ite
 const flat=[];for(const r of rows){if(!Array.isArray(r.picks))continue;for(let i=0;i<Math.min(3,r.picks.length);i++){const p=r.picks[i];if(!p||Number(p.day)<1||Number(p.day)>30)continue;flat.push({day:Number(p.day),time:String(p.time),name:r.company,rank:i+1})}}flat.sort((a,b)=>a.day-b.day||a.time.localeCompare(b.time)||a.rank-b.rank);$('detailRows').innerHTML=flat.length?flat.map(x=>`<tr><td>11월 ${x.day}일</td><td>${['일','월','화','수','목','금','토'][new Date(2026,10,x.day).getDay()]}</td><td><strong>${esc(x.time)}</strong></td><td>${esc(x.name)}</td><td><span class="pill">${x.rank}순위</span></td></tr>`).join(''):'<tr><td colspan="5" class="muted">해당 회사의 제출된 신청 일정이 없습니다.</td></tr>';
 $('rows').innerHTML=(selected?[selected]:names).map(n=>{const r=rows.find(x=>x.company===n);return `<tr><td><strong>${esc(n)}</strong></td>${[0,1,2].map(i=>`<td>${fmt(r?.picks?.[i])}</td>`).join('')}<td>${r?new Date(r.updated_at).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}):'—'}</td><td>${r?'제출 완료':'미회신'}</td></tr>`}).join('');$('status').textContent='제출 완료된 회신만 표시 · 최종 갱신 '+new Date().toLocaleTimeString('ko-KR')+' · 변경 이벤트 감지 + 10초마다 자동 확인';}
 async function load(){const {data,error}=await db.from('debrief_responses').select('company,picks,updated_at');if(error){$('status').textContent='조회 오류: '+error.message+' · 관리자 권한과 데이터베이스 정책을 확인하세요.';return}allResponses=data||[];render(allResponses)}
-async function enter(){const {data:{user}}=await db.auth.getUser();if(!user||user.is_anonymous){$('app').style.display='none';$('login').style.display='block';return}const {data,error}=await db.from('debrief_admins').select('user_id').eq('user_id',user.id).maybeSingle();if(error||!data){$('loginError').textContent='관리자 권한이 등록되지 않았습니다. 관리자 등록 SQL을 확인해 주세요.';$('app').style.display='none';$('login').style.display='block';return} $('login').style.display='none';$('app').style.display='block';$('logout').style.display='inline-block';await load();if(!channel)channel=db.channel('admin-responses').on('postgres_changes',{event:'*',schema:'public',table:'debrief_responses'},load).subscribe();if(!timer)timer=setInterval(load,10000)}
-$('companyFilter').innerHTML='<option value="">전체 회사</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');$('companyFilter').addEventListener('change',()=>render(allResponses));
-$('loginForm').onsubmit=async e=>{e.preventDefault();$('loginError').textContent='';const {error}=await db.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error){$('loginError').textContent=error.message;return}await enter()};
-$('logout').onclick=async()=>{if(channel){await db.removeChannel(channel);channel=null}if(timer){clearInterval(timer);timer=null}await db.auth.signOut();location.reload()};$('refresh').onclick=load;enter();
+async function enter(){
+  try {
+    const result=await db.auth.getUser();
+    if(result.error) throw result.error;
+    const user=result.data?.user;
+    if(!user || user.is_anonymous){
+      $('app').style.display='none';$('login').style.display='block';return;
+    }
+    const {data,error}=await db.from('debrief_admins').select('user_id').eq('user_id',user.id).maybeSingle();
+    if(error) throw error;
+    if(!data){
+      $('loginError').textContent='로그인은 되었지만 관리자 권한이 없습니다. Supabase debrief_admins 테이블 등록 여부를 확인하세요.';
+      $('app').style.display='none';$('login').style.display='block';return;
+    }
+    $('loginError').textContent='';$('login').style.display='none';$('app').style.display='block';
+    $('logout').style.display='inline-block';
+    await load();
+    if(!channel) channel=db.channel('admin-responses').on('postgres_changes',{event:'*',schema:'public',table:'debrief_responses'},load).subscribe();
+    if(!timer) timer=setInterval(load,10000);
+  } catch(e) {
+    $('loginError').textContent='관리자 확인 오류: '+(e?.message||String(e));
+    $('app').style.display='none';$('login').style.display='block';
+    console.error('Admin access:',e);
+  }
+}
+$('companyFilter').innerHTML='<option value="">전체 회사</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+$('companyFilter').addEventListener('change',()=>render(allResponses));
+const loginButton=$('loginForm').querySelector('button[type="submit"]');
+$('loginForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const email=$('email').value.trim();
+  const password=$('password').value;
+  if(!email||!password) return;
+  loginButton.disabled=true;
+  loginButton.textContent='로그인 확인 중...';
+  $('loginError').textContent='Supabase 계정을 확인하고 있습니다.';
+  try {
+    const authPromise=db.auth.signInWithPassword({email,password});
+    const response=await Promise.race([
+      authPromise,
+      new Promise((_,reject)=>setTimeout(()=>reject(new Error('연결 시간이 초과되었습니다. 인터넷 연결과 Supabase 상태를 확인해 주세요.')),15000))
+    ]);
+    if(response.error) throw response.error;
+    $('loginError').textContent='관리자 권한을 확인하고 있습니다.';
+    await enter();
+  } catch(error) {
+    const msg=error?.message||String(error);
+    $('loginError').textContent=msg==='Invalid login credentials'
+      ? '이메일 또는 비밀번호가 올바르지 않습니다. Supabase Authentication → Users에서 계정을 확인하세요.'
+      : '로그인 오류: '+msg;
+    console.error('Admin login:',error);
+  } finally {
+    loginButton.disabled=false;
+    loginButton.textContent='로그인';
+  }
+});
+$('logout').onclick=async()=>{
+  try {
+    if(channel){await db.removeChannel(channel);channel=null}
+    if(timer){clearInterval(timer);timer=null}
+    await db.auth.signOut();location.reload();
+  } catch(e){alert('로그아웃 오류: '+e.message)}
+};
+$('refresh').onclick=()=>load().catch(e=>{$('status').textContent='갱신 오류: '+e.message});
+enter().catch(e=>{$('loginError').textContent='초기화 오류: '+e.message});
 </script></body></html>
