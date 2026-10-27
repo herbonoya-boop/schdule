@@ -33,7 +33,7 @@ function render(){const {step,completed,busy}=state;$('progress').style.width=`$
 else if(step===0){h=`<div class="caption">STEP 01 / 05</div><h2>회사를 선택해 주세요.</h2><p class="helper">회사명과 숫자 4자리 인증코드를 입력해 주세요.</p><label for="company">회사명</label><select id="company"><option value="">회사를 선택해 주세요</option>${COMPANIES.map(c=>`<option value="${esc(c)}" ${c===state.company?'selected':''}>${esc(c)}</option>`).join('')}</select><label for="code">인증코드</label><input id="code" type="text" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="숫자 4자리" value="${esc(state.code)}"><p class="caption">회사별로 전달받은 인증코드를 입력해 주세요.</p>`}
 else if(step<=3){h=`<div class="caption">STEP 0${step+1} / 05</div><h2>${step}순위 일정과 시간을 선택해 주세요.</h2><p class="helper">날짜를 누르면 오른쪽에 해당 날짜의 시간이 표시됩니다.</p><div class="calendar-layout">${dayCalendar()}${timePanel()}</div><div class="legend"><span><i></i>타사 선택 시간</span>　<span><b>1·2순위</b> 내가 앞서 선택한 시간</span></div>`}
 else{h='<div class="caption">STEP 05 / 05</div><h2>회신 내용을 확인해 주세요.</h2><p class="helper">제출 후 직접 수정할 수 없습니다. 선택하신 세 가지 일정을 확인해 주세요.</p>'}
-if(state.error)h+=`<p class="error" role="alert">${esc(state.error)}</p>`;$('content').innerHTML=h;$('actions').style.display=completed?'none':'flex';$('back').style.display=step===0?'none':'inline-block';$('next').textContent=busy?'처리 중...':step===0?'인증하고 시작하기':step<=3?`${step}순위 선택완료`:'회신 제출';$('next').disabled=busy||!state.ready||(step===0?(!state.company||!/^[0-9]{4}$/.test(state.code)):step<=3?!state.picks[step-1]:false);
+if(state.error)h+=`<p class="error" role="alert">${esc(state.error)}</p>`;$('content').innerHTML=h;$('actions').style.display=completed?'none':'flex';$('back').style.display=step===0?'none':'inline-block';$('next').textContent=busy?'처리 중...':step===0?'인증하고 시작하기':step<=3?(state.picks[step-1]?`${step}순위 선택완료`:'날짜와 시간을 선택해 주세요'):'회신 제출';$('next').disabled=busy||!state.ready||(step===0?(!state.company||!/^[0-9]{4}$/.test(state.code)):step<=3?!state.picks[step-1]:false);
 if(step===0&&!completed){$('company').onchange=e=>{state.company=e.target.value;state.code='';state.picks=[null,null,null];state.error='';render()};$('code').oninput=e=>{state.code=e.target.value.replace(/\D/g,'').slice(0,4);e.target.value=state.code;$('next').disabled=!state.ready||!state.company||state.code.length!==4}}
 document.querySelectorAll('[data-day]').forEach(el=>el.onclick=()=>{state.day=Number(el.dataset.day);state.error='';render()});document.querySelectorAll('[data-time]').forEach(el=>el.onclick=()=>{const time=el.dataset.time;if(state.picks.some((p,i)=>i!==state.step-1&&p?.day===state.day&&p?.time===time))return;state.picks[state.step-1]={day:state.day,time};state.error='';render()});summary()}
 async function refreshOccupied(){if(!state.ready)return;try{const {data,error}=await db.rpc('occupied_slots');if(error)throw error;state.occupied=new Set((data||[]).map(x=>`${Number(x.day)}|${String(x.slot_time).slice(0,5)}`));if(state.step>=1&&state.step<=3&&!state.completed)render()}catch(e){console.warn('타사 일정 조회 실패:',e.message)}}
@@ -41,6 +41,45 @@ async function next(){if(state.busy||state.completed||!state.ready)return;state.
 if(state.step<=3){if(!state.picks[state.step-1])return;state.step++;state.day=state.step<=3?state.picks[state.step-1]?.day??null:null;render();return}
 state.busy=true;render();try{const {data,error}=await db.rpc('submit_debrief_invite',{p_company:state.company,p_code:state.code,p_picks:state.picks});if(error)throw error;if(data!=='ok')throw Error(data==='already_submitted'?'이미 제출된 회사입니다.':data==='invalid_code'?'인증코드가 올바르지 않습니다.':data==='account_already_submitted'?'이미 제출에 사용된 계정입니다.':data==='invalid_schedule'?'세 순위의 일정이 올바른지 확인해 주세요.':'제출 실패: '+data);state.completed=true;state.code=''}catch(e){state.error=e.message}finally{state.busy=false;render()}}
 $('next').onclick=next;$('back').onclick=()=>{if(state.step>0&&!state.busy){state.step--;state.day=state.step>=1&&state.step<=3?state.picks[state.step-1]?.day??null:null;state.error='';render()}};
-async function init(){render();try{const {data,error}=await db.auth.getSession();if(error)throw error;let session=data.session;if(!session){const v=await db.auth.signInAnonymously();if(v.error)throw v.error;session=v.data.session}if(!session)throw Error('로그인 세션을 생성하지 못했습니다.');const result=await db.from('debrief_responses').select('company,picks').eq('user_id',session.user.id).maybeSingle();if(result.error)throw result.error;if(result.data){state.company=result.data.company;state.picks=Array.isArray(result.data.picks)?result.data.picks:state.picks;state.completed=true;state.step=4}state.ready=true;await refreshOccupied()}catch(e){state.error='서버 연결 오류: '+e.message;console.error(e)}render()}
+async function init(){
+  render();
+  try {
+    const {data,error}=await db.auth.getSession();
+    if(error) throw error;
+    let session=data.session;
+    if(session){
+      // Previously submitted sessions should not force a completion screen
+      // on a shared device or on return visits.
+      const previous=await db.from('debrief_responses')
+        .select('user_id')
+        .eq('user_id',session.user.id)
+        .maybeSingle();
+      if(previous.error) throw previous.error;
+      if(previous.data){
+        const signedOut=await db.auth.signOut();
+        if(signedOut.error) throw signedOut.error;
+        session=null;
+      }
+    }
+    if(!session){
+      const signedIn=await db.auth.signInAnonymously();
+      if(signedIn.error) throw signedIn.error;
+      session=signedIn.data.session;
+    }
+    if(!session) throw Error('로그인 세션을 생성하지 못했습니다.');
+    state.completed=false;
+    state.step=0;
+    state.company='';
+    state.code='';
+    state.picks=[null,null,null];
+    state.day=null;
+    state.ready=true;
+    await refreshOccupied();
+  }catch(e){
+    state.error='서버 연결 오류: '+e.message;
+    console.error(e);
+  }
+  render();
+}
 init();setInterval(refreshOccupied,12000);
 </script></body></html>
