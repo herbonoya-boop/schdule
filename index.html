@@ -10,6 +10,7 @@
 .summary{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:20px}.summary-title{font-weight:600;font-size:13px}.summary-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eef0f3;font-size:12px}.summary-row:last-child{border:0}.summary-row span:first-child{color:var(--muted);white-space:nowrap}.summary-row span:last-child{text-align:right}.actions{display:flex;gap:8px;margin-top:20px}.action{border:0;border-radius:999px;padding:13px 18px;font-size:14px}.primary{background:var(--ink);color:white;flex:1}.secondary{background:var(--bg);color:var(--ink)}.action:disabled{background:#e0e2e8;color:#a5a8b5;cursor:not-allowed}.notice{font-size:12px;color:var(--muted);margin-top:20px}.notice ul{padding-left:18px}.notice li{margin:5px 0}.error{color:#b42318;font-size:12px;margin-top:12px;overflow-wrap:anywhere}.complete{text-align:center;padding:28px 0}.check{height:58px;width:58px;border-radius:50%;display:grid;place-items:center;background:#e4f7ee;color:#00885a;font-size:30px;margin:0 auto 16px}@media(max-width:400px){.container{padding:20px 12px}.calendar-layout{grid-template-columns:minmax(0,1fr) 133px;gap:6px}.day{height:34px}.times{padding:6px}.time{font-size:10px}h1{font-size:20px}}
 
 .calendar-heading{font-size:16px;font-weight:700;margin:3px 0 12px;color:#152544}.calendar-heading span{font-size:11px;color:#6b6f7e;font-weight:500;margin-left:8px}
+.required-label{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:5px;color:#7c3154;background:#fce9f2;font-size:11px;font-weight:700;vertical-align:baseline}
 /* 담당자용 핑크 → 네이비 그라데이션 헤더 */
 .container > header {
   position: relative;
@@ -41,7 +42,7 @@
 }
 </style></head><body><main class="container">
 <header><div class="eyebrow">DONG-A SOCIO GROUP · 2026</div><h1>2026 조직진단 디브리핑 일정</h1><p class="intro">2026년 8월에 실시한 동아쏘시오그룹 조직진단 결과를 보고드리고자 합니다.</p></header>
-<section class="info"><p><strong>보고 목적</strong> 2026 동아쏘시오그룹 조직진단 결과 디브리핑</p><p><strong>보고 내용</strong> 조직진단 분석결과, 원인탐색결과, 개선활동 제안</p><p><strong>보고 시간</strong> 30분 ~ 1시간</p></section>
+<section class="info"><p><strong>보고 목적</strong> 2026 동아쏘시오그룹 조직진단 결과 디브리핑</p><p><strong>보고 내용</strong> 조직진단 분석결과, 원인탐색결과, 개선활동 제안</p><p><strong>보고 시간</strong> 30분 ~ 1시간</p><p><strong>보고 대상</strong> 대표님, HR 실장님, 조직문화 담당 팀장님 <span class="required-label">필수</span></p></section>
 <div class="progress"><div id="progress" style="width:20%"></div></div><section id="content"></section><div id="actions" class="actions"><button id="back" class="action secondary" type="button">이전 단계</button><button id="next" class="action primary" type="button">다음 단계</button></div>
 <section class="summary" id="summary"></section><section class="notice"><strong>참고사항</strong><ul><li>타사에는 회사명을 공개하지 않습니다.</li><li>점선으로 표기한 시간도 선택 가능하나, 추후에 조정이 있을 수 있습니다.</li><li>제출 후 일정 변경은 담당 관리자에게 요청해 주시기 바랍니다.</li></ul></section>
 </main><script>
