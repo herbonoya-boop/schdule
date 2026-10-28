@@ -1,111 +1,1425 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026 조직진단 디브리핑 관리자</title><style>
-:root{--navy:#152544;--ink:#23242a;--muted:#697083;--line:#e3e7ee;--bg:#f6f7f9;--blue:#4262ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px/1.5 system-ui,'Noto Sans KR',sans-serif;color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1390px;margin:auto;padding:26px 20px 70px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:20px}.top h1{font-size:25px;letter-spacing:-.6px;color:var(--navy);margin:5px 0}.eyebrow{font-size:11px;letter-spacing:1.3px;color:var(--muted)}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:15px}.login{max-width:420px;margin:12vh auto}.login h2{margin:0}.field{width:100%;height:43px;padding:8px 12px;border:1px solid #c7cad5;border-radius:8px;background:#fff;color:var(--ink)}label{font-size:12px;font-weight:600;display:block;margin:8px 0 5px}.btn{border-radius:999px;padding:10px 18px;border:1px solid #1c1c1e;background:#1c1c1e;color:#fff}.btn.outline{background:#fff;color:var(--ink);border-color:#c7cad5}.btn:disabled{opacity:.5;cursor:not-allowed}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.between{justify-content:space-between}.muted{color:var(--muted)}.small{font-size:12px}.error{color:#b42318;font-size:12px;white-space:pre-wrap;margin:10px 0}.good{color:#187574}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat strong{display:block;font-size:27px;color:var(--navy)}h2{font-size:18px;margin:0 0 10px}.scroll{overflow-x:auto}.weekdays,.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;min-width:970px}.weekday{text-align:center;color:var(--muted);padding:9px;font-weight:600}.date{border:1px solid var(--line);border-radius:10px;min-height:140px;padding:8px;background:#fff}.date.closed{background:#f2f3f6}.date .head{display:flex;justify-content:space-between;align-items:center;font-weight:650;margin-bottom:8px}.slot{border-left:3px solid var(--blue);border-radius:6px;background:#f5f7fc;padding:6px;margin:5px 0;font-size:11px}.rank2{border-color:#0fbcb0}.rank3{border-color:#efa556}.confirmed{background:#e5f6ef;border-left-color:#00875c}.chip{border-radius:999px;padding:2px 7px;background:#e9edf8;font-size:11px}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.inner{background:#fafbfd;border:1px solid var(--line);border-radius:12px;padding:16px}.triples{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.triples .field{margin:3px 0}.message{min-height:20px;font-size:12px;margin-top:9px}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:850px}td,th{padding:10px;text-align:left;border-bottom:1px solid var(--line);font-size:12px}th{background:#fafbfd;color:var(--muted)}.pill{padding:3px 8px;border-radius:999px;background:#eef0f4;white-space:nowrap}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}#app{display:none}.highlight{border:1px solid #a6bbff;background:#f4f6ff}.badge{background:#f1f3f5;border-radius:5px;padding:3px 7px;color:#555}.danger{color:#b42318}.notes{font-size:12px;color:var(--muted)}@media(max-width:850px){.controls{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.triples{grid-template-columns:1fr}.shell{padding:15px 10px}}
-.minute-pair{display:inline-flex;gap:5px;vertical-align:middle;margin-left:5px}.minute-pair .field{width:auto;max-width:90px} @media(max-width:560px){.minute-pair{display:flex;margin:5px 0}} </style></head><body><main class="shell"><header class="top"><div><div class="eyebrow">DONG-A SOCIO GROUP · ADMIN</div><h1>2026 조직진단 디브리핑 일정 관리</h1><div class="muted small">전체 회신 · 관리자 조정 · 일정 확정 · 시간 개방 관리</div></div><button id="logout" class="btn outline" style="display:none">로그아웃</button></header>
-<section id="login" class="card login"><h2>관리자 로그인</h2><p class="muted">등록된 관리자 이메일과 비밀번호로 로그인하세요.</p><label for="email">이메일</label><input id="email" class="field" type="email" autocomplete="username"><label for="password">비밀번호</label><input id="password" class="field" type="password" autocomplete="current-password"><div class="actions"><button id="loginBtn" class="btn">로그인</button></div><p id="loginMsg" class="error" role="alert"></p></section>
-<div id="app"><section class="stats"><div class="card stat">제출/관리 입력 회사<strong id="nSubmitted">0 / 11</strong></div><div class="card stat">미입력 회사<strong id="nPending">11</strong></div><div class="card stat">확정 회사<strong id="nConfirmed">0</strong></div><div class="card stat">희망 일정<strong id="nPicks">0</strong></div></section>
-<section class="card"><div class="row between"><div><h2>2026년 11월 일정 캘린더</h2><div class="notes">파란색 1순위 · 민트색 2순위 · 주황색 3순위 · 초록색 확정</div></div><div class="row"><label for="filter">회사</label><select id="filter" class="field" style="width:165px"></select><button id="refresh" class="btn outline">지금 새로고침</button></div></div><div id="status" class="notes">불러오는 중…</div><div class="scroll"><div class="weekdays" id="weekdays"></div><div class="calendar" id="calendar"></div></div></section>
-<section class="card"><h2>관리자 직접 입력 · 조정 · 확정</h2><p class="notes">관리자는 회사별 희망 1~3순위를 입력하거나 수정할 수 있습니다. 최종 확정은 아래에서 별도로 지정하며, 확정 일시는 같은 시간에 다른 회사가 확정할 수 없습니다.</p><div class="controls">
-<div class="inner"><h2>① 회사 희망 일정 입력·수정</h2><label for="editCompany">회사 선택</label><select class="field" id="editCompany"></select><div id="pickEditors" class="triples"></div><div class="actions"><button class="btn" id="savePicks">희망 일정 저장</button><button class="btn outline" id="fillCurrent">현재값 다시 불러오기</button></div><p class="message" id="editMsg"></p></div>
-<div class="inner"><h2>② 확정 일정 지정</h2><label for="confirmCompany">회사 선택</label><select class="field" id="confirmCompany"></select><div class="row"><div style="flex:1"><label for="confirmDay">날짜</label><select class="field" id="confirmDay"></select></div><div style="flex:1"><label for="confirmTime">시간</label><select class="field" id="confirmTime"></select></div></div><div class="actions"><button class="btn" id="saveConfirm">일정 확정 / 변경</button><button class="btn outline" id="clearConfirm">확정 해제</button></div><p class="message" id="confirmMsg"></p><p class="notes">희망 1~3순위 외의 날짜도 관리자 판단으로 확정할 수 있습니다.</p></div>
-<div class="inner"><h2>③ 날짜·시간 선택 가능 여부</h2><p class="notes">기본 개방일: 11/3·4·9·10·11·12·13. 그 외 날짜 및 닫힌 시간을 관리자가 열 수 있습니다. 이미 확정된 시간은 먼저 확정을 해제해야 닫을 수 있습니다.</p><div class="row"><div style="flex:1"><label for="ruleDay">날짜</label><select class="field" id="ruleDay"></select></div><div style="flex:1"><label for="ruleTime">시간</label><select class="field" id="ruleTime"></select></div></div><p id="ruleState" class="small muted"></p><div class="actions"><button id="openSlot" class="btn">선택 가능으로 열기</button><button id="closeSlot" class="btn outline">선택 불가로 닫기</button></div><p class="message" id="ruleMsg"></p></div>
-<div class="inner"><h2>운영 안내</h2><p>회사 담당자는 기존 방식대로 <b>처음 1회만 제출</b>합니다. 관리자의 수정값과 확정 일정은 별도로 보관됩니다.</p><p class="notes">선택 가능 여부 변경은 담당자용 페이지에 반영되며, 제출 시 서버에서도 최신 규칙을 확인합니다. 회사 담당자용 화면에는 타사 회사명이 공개되지 않습니다.</p><p class="notes">변경 기록은 SQL의 <code>debrief_admin_audit</code> 테이블에 남습니다.</p></div></div></section>
-<section class="card tablewrap"><h2>회사별 현황</h2><table><thead><tr><th>회사명</th><th>1순위</th><th>2순위</th><th>3순위</th><th>최종 확정</th><th>수정 기준</th></tr></thead><tbody id="companyRows"></tbody></table></section>
-<section class="card tablewrap"><h2>최근 관리자 변경 기록</h2><table><thead><tr><th>변경 시각</th><th>작업</th><th>회사</th></tr></thead><tbody id="auditRows"></tbody></table></section></div></main>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 조직진단 디브리핑 일정 관리</title>
+
+<style>
+:root {
+  --navy:#172747;
+  --pink:#d96a9a;
+  --bg:#f5f6f9;
+  --line:#e2e5eb;
+  --text:#252936;
+  --muted:#6c7282;
+  --blue:#4564dc;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,
+    "Noto Sans KR",sans-serif;
+  font-size:14px;
+}
+
+button,input,select {font:inherit}
+
+button {cursor:pointer}
+
+header {
+  background:linear-gradient(
+    110deg,var(--pink),var(--navy)
+  );
+  color:#fff;
+  padding:24px;
+}
+
+.header-inner {
+  max-width:1300px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+header h1 {
+  margin:5px 0;
+  font-size:25px;
+}
+
+header p {margin:0;opacity:.85}
+
+main {
+  max-width:1300px;
+  margin:24px auto;
+  padding:0 16px 55px;
+}
+
+.card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:22px;
+  margin-bottom:18px;
+}
+
+h2 {font-size:19px;margin:0 0 15px}
+h3 {font-size:16px;margin:0 0 14px}
+
+label {
+  display:block;
+  font-size:12px;
+  font-weight:650;
+  margin:12px 0 6px;
+}
+
+input,select {
+  width:100%;
+  height:42px;
+  border:1px solid #cbd0da;
+  background:#fff;
+  border-radius:9px;
+  padding:8px 10px;
+}
+
+button {
+  padding:10px 16px;
+  border:0;
+  border-radius:9px;
+  background:var(--navy);
+  color:#fff;
+}
+
+button.secondary {
+  background:#eef0f5;
+  color:var(--navy);
+}
+
+button.danger {background:#b94149}
+button:disabled {opacity:.55}
+
+.actions {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.login {
+  max-width:430px;
+  margin:10vh auto;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.stat {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+}
+
+.stat .number {
+  font-size:28px;
+  font-weight:750;
+  color:var(--navy);
+  margin-top:7px;
+}
+
+.muted {color:var(--muted)}
+.small {font-size:12px}
+.error {color:#bb3038}
+.success {color:#087b55}
+.message {min-height:20px;margin-top:12px}
+
+.row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.between {justify-content:space-between}
+
+.time-pair {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.priority {
+  padding:12px;
+  background:#f8f9fc;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.priority-title {
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.calendar-scroll {overflow-x:auto}
+
+.weekdays,.calendar {
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:6px;
+  min-width:950px;
+}
+
+.weekday {
+  text-align:center;
+  padding:9px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+.day {
+  min-height:130px;
+  padding:9px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:10px;
+}
+
+.day.closed {background:#f1f2f5}
+
+.day-head {
+  display:flex;
+  justify-content:space-between;
+  gap:5px;
+  margin-bottom:8px;
+}
+
+.count {
+  color:#777;
+  font-size:10px;
+}
+
+.entry {
+  padding:6px;
+  margin:5px 0;
+  background:#f0f3ff;
+  border-left:3px solid #4564dc;
+  border-radius:5px;
+  font-size:11px;
+  overflow-wrap:anywhere;
+}
+
+.entry.rank2 {
+  background:#edfaf8;
+  border-left-color:#17a89b;
+}
+
+.entry.rank3 {
+  background:#fff7eb;
+  border-left-color:#efaa51;
+}
+
+.entry.confirmed {
+  background:#eaf8ef;
+  border-left-color:#06865a;
+}
+
+.table-scroll {overflow-x:auto}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+th,td {
+  padding:11px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  font-size:12px;
+}
+
+th {background:#f8f9fb}
+
+#dashboard {display:none}
+#logout {display:none}
+
+@media(max-width:850px){
+  .grid {grid-template-columns:1fr}
+  .stats {grid-template-columns:repeat(2,1fr)}
+  header h1 {font-size:20px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="small">
+        DONG-A SOCIO GROUP · ADMIN
+      </div>
+      <h1>2026 조직진단 디브리핑 일정 관리</h1>
+      <p>
+        전체 회신 · 관리자 일정 수정 · 최종 확정 · 시간 개방
+      </p>
+    </div>
+    <button id="logout" class="secondary">
+      로그아웃
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section id="login" class="card login">
+    <h2>관리자 로그인</h2>
+    <p class="muted">
+      등록된 관리자 계정으로 로그인해 주세요.
+    </p>
+
+    <label for="email">이메일</label>
+    <input id="email"
+           type="email"
+           autocomplete="username">
+
+    <label for="password">비밀번호</label>
+    <input id="password"
+           type="password"
+           autocomplete="current-password">
+
+    <div class="actions">
+      <button id="loginBtn">로그인</button>
+    </div>
+
+    <p id="loginMsg" class="message error"></p>
+  </section>
+
+  <div id="dashboard">
+
+    <section class="stats">
+      <div class="stat">
+        <div class="muted">일정 입력 회사</div>
+        <div id="submittedCount" class="number">0 / 11</div>
+      </div>
+
+      <div class="stat">
+        <div class="muted">미입력 회사</div>
+        <div id="pendingCount" class="number">11</div>
+      </div>
+
+      <div class="stat">
+        <div class="muted">최종 확정 회사</div>
+        <div id="confirmedCount" class="number">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="muted">희망 일정 총수</div>
+        <div id="picksCount" class="number">0</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="row between">
+        <div>
+          <h2>2026년 11월 일정 캘린더</h2>
+          <p class="small muted">
+            1순위 파랑 · 2순위 민트 ·
+            3순위 주황 · 확정 초록
+          </p>
+        </div>
+
+        <div class="row">
+          <select id="companyFilter"
+                  style="width:190px"></select>
+          <button id="refreshBtn" class="secondary">
+            새로고침
+          </button>
+        </div>
+      </div>
+
+      <p id="refreshStatus" class="small muted"></p>
+
+      <div class="calendar-scroll">
+        <div id="weekdays" class="weekdays"></div>
+        <div id="calendar" class="calendar"></div>
+      </div>
+    </section>
+
+    <div class="grid">
+
+      <section class="card">
+        <h2>① 회사별 희망 일정 직접 입력·수정</h2>
+
+        <label>회사 선택</label>
+        <select id="editCompany"></select>
+
+        <div id="priorityEditors"></div>
+
+        <div class="actions">
+          <button id="savePicksBtn">
+            희망 일정 저장
+          </button>
+          <button id="reloadPicksBtn" class="secondary">
+            기존 일정 불러오기
+          </button>
+        </div>
+
+        <p id="editMsg" class="message"></p>
+      </section>
+
+      <section class="card">
+        <h2>② 회사별 최종 일정 확정</h2>
+
+        <label>회사 선택</label>
+        <select id="confirmCompany"></select>
+
+        <label>확정 날짜</label>
+        <select id="confirmDay"></select>
+
+        <label>확정 시간</label>
+        <div class="time-pair">
+          <select id="confirmHour"></select>
+          <select id="confirmMinute"></select>
+        </div>
+
+        <div class="actions">
+          <button id="confirmBtn">
+            일정 확정 / 변경
+          </button>
+
+          <button id="clearConfirmBtn" class="danger">
+            확정 해제
+          </button>
+        </div>
+
+        <p id="confirmMsg" class="message"></p>
+        <p class="small muted">
+          다른 회사가 이미 확정한 동일 시간에는
+          중복 확정할 수 없습니다.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>③ 날짜·시간 선택 가능 여부 관리</h2>
+
+        <p class="small muted">
+          기본 개방일:
+          11월 3·4·9·10·11·12·13일.
+          다른 날짜도 관리자가 직접 열 수 있습니다.
+        </p>
+
+        <label>관리 날짜</label>
+        <select id="ruleDay"></select>
+
+        <label>관리 시간</label>
+        <div class="time-pair">
+          <select id="ruleHour"></select>
+          <select id="ruleMinute"></select>
+        </div>
+
+        <p id="ruleState" class="small muted"></p>
+
+        <div class="actions">
+          <button id="openBtn">
+            선택 가능으로 열기
+          </button>
+
+          <button id="closeBtn" class="secondary">
+            선택 불가로 닫기
+          </button>
+        </div>
+
+        <p id="ruleMsg" class="message"></p>
+      </section>
+
+      <section class="card">
+        <h2>운영 안내</h2>
+
+        <p>
+          계열사 담당자는 기존과 동일하게
+          인증코드로 최초 1회 회신합니다.
+        </p>
+
+        <p>
+          관리자가 수정한 희망 일정은
+          별도로 저장되며 원본 회신은 보존됩니다.
+        </p>
+
+        <p>
+          최종 확정 시간은 다른 회사의
+          신규 선택 대상에서 제외됩니다.
+        </p>
+
+        <p class="small muted">
+          날짜·시간의 개방 변경 사항은
+          담당자용 페이지에도 반영됩니다.
+        </p>
+      </section>
+
+    </div>
+
+    <section class="card table-scroll">
+      <h2>회사별 신청 및 확정 현황</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>회사명</th>
+            <th>1순위</th>
+            <th>2순위</th>
+            <th>3순위</th>
+            <th>최종 확정</th>
+            <th>입력 구분</th>
+          </tr>
+        </thead>
+        <tbody id="companyTable"></tbody>
+      </table>
+    </section>
+
+    <section class="card table-scroll">
+      <h2>최근 관리자 변경 기록</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>변경 시각</th>
+            <th>작업</th>
+            <th>회사</th>
+          </tr>
+        </thead>
+        <tbody id="auditTable"></tbody>
+      </table>
+    </section>
+
+  </div>
+</main>
+
 <script>
-'use strict';
-const URL='https://evrawzvpnpoycknoadbq.supabase.co';
-const KEY='sb_publishable_kQL9FANhvvov8t-nwG6sOw_F57tItPP';
-const names=['동아제약','동아에스티','비티젠','에스티팜','동아 오츠카','용마로지스','동아참메드','동아 에코팩','한국신동공업','아벤종합건설','앱티스'];
-const times=Array.from({length:18},(_,i)=>`${String(9+Math.floor(i/2)).padStart(2,'0')}:${i%2?'30':'00'}`);
-const weekdays=['일','월','화','수','목','금','토'];
-const $=id=>document.getElementById(id),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const defaultOpen=d=>[3,4,9,10,11,12,13].includes(d);
-const dayOptions=()=>Array.from({length:30},(_,i)=>`<option value="${i+1}">11월 ${i+1}일 (${weekdays[new Date(2026,10,i+1).getDay()]})</option>`).join('');
-const timeOptions=()=>times.map(t=>`<option value="${t}">${t}</option>`).join('');
-function timeDropdown(id){
- const current=$(id).value||'09:00';
- $(id).style.display='none';
- const wrap=document.createElement('span');wrap.className='minute-pair';
- wrap.innerHTML=`<select class="field minute-hour" aria-label="시간">${Array.from({length:9},(_,i)=>`<option value="${String(i+9).padStart(2,'0')}">${i+9}시</option>`).join('')}</select><select class="field minute-part" aria-label="분"><option value="00">00분</option><option value="30">30분</option></select>`;
- $(id).after(wrap);
- const h=wrap.querySelector('.minute-hour'),m=wrap.querySelector('.minute-part');
- function syncVisual(){h.value=$(id).value.slice(0,2);m.value=$(id).value.slice(3,5)}
- function syncHidden(){ $(id).value=h.value+':'+m.value;$(id).dispatchEvent(new Event('change')) }
- h.onchange=syncHidden;m.onchange=syncHidden;
- syncVisual();$(id).syncVisual=syncVisual;
+"use strict";
+
+/* ====================================
+   Supabase 연결 설정
+==================================== */
+
+const SUPABASE_URL =
+  "https://evrawzvpnpoycknoadbq.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_kQL9FANhvvov8t-nwG6sOw_F57tItPP";
+
+/* ====================================
+   기본 데이터
+==================================== */
+
+const COMPANIES = [
+  "동아제약",
+  "동아에스티",
+  "비티젠",
+  "에스티팜",
+  "동아 오츠카",
+  "용마로지스",
+  "동아참메드",
+  "동아 에코팩",
+  "한국신동공업",
+  "아벤종합건설",
+  "앱티스"
+];
+
+const OPEN_DAYS = [3,4,9,10,11,12,13];
+
+const HOURS = [
+  "09","10","11","12","13",
+  "14","15","16","17"
+];
+
+const MINUTES = ["00","30"];
+
+const WEEKDAYS = [
+  "일","월","화","수","목","금","토"
+];
+
+let db = null;
+let refreshTimer = null;
+let realtimeChannel = null;
+
+let snapshot = {
+  responses:[],
+  confirmations:[],
+  rules:[],
+  audit:[]
+};
+
+const el = id => document.getElementById(id);
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(
+    /[&<>"']/g,
+    c => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    })[c]
+  );
 }
-let db,channel,timer,data={responses:[],rules:[],confirmations:[],audit:[]};
-const ruleOpen=(d,t)=>{const r=data.rules.find(x=>Number(x.day)===Number(d)&&x.slot_time===t);return r?r.is_open:defaultOpen(Number(d))};
-const fmt=p=>p?`11/${p.day} ${p.time}`:'—';
-function optsSelect(id,options){$(id).innerHTML=options}
-function setMessage(id,message,good=false){$(id).textContent=message;$(id).className='message '+(good?'good':'danger')}
-function render(){
- const filter=$('filter').value;
- const responses=data.responses||[], confirmations=data.confirmations||[];
- $('nSubmitted').textContent=`${responses.length} / 11`;$('nPending').textContent=11-responses.length;
- $('nConfirmed').textContent=confirmations.length;
- $('nPicks').textContent=responses.reduce((n,r)=>n+(r.picks?.filter(Boolean).length||0),0);
- const entries=[];
- for(const r of responses.filter(r=>!filter||r.company===filter))for(let i=0;i<Math.min(3,r.picks?.length||0);i++){
-   const p=r.picks[i];if(p?.day&&p?.time)entries.push({day:Number(p.day),time:p.time,company:r.company,rank:i+1})
- }
- const confirmed=confirmations.filter(x=>!filter||x.company===filter);
- $('weekdays').innerHTML=weekdays.map(w=>`<div class="weekday">${w}</div>`).join('');
- $('calendar').innerHTML=Array.from({length:35},(_,i)=>{
-  const d=i+1;if(d>30)return '<div></div>';
-  const slots=entries.filter(x=>x.day===d).sort((a,b)=>a.time.localeCompare(b.time)||a.rank-b.rank);
-  const confirmationsForDay=confirmed.filter(x=>x.day===d);
-  const open=times.filter(t=>ruleOpen(d,t)).length;
-  return `<div class="date ${open===0?'closed':''}"><div class="head"><span>${d}일</span><span class="badge">${open}개 시간 개방</span></div>${confirmationsForDay.map(x=>`<div class="slot confirmed"><b>확정 ${esc(x.slot_time)}</b><div>${esc(x.company)}</div></div>`).join('')}${slots.map(x=>`<div class="slot rank${x.rank}"><b>${esc(x.time)} · ${x.rank}순위</b><div>${esc(x.company)}</div></div>`).join('')}</div>`
- }).join('');
- $('companyRows').innerHTML=names.filter(n=>!filter||n===filter).map(n=>{const r=responses.find(x=>x.company===n),c=confirmations.find(x=>x.company===n);return `<tr><td><b>${esc(n)}</b></td>${[0,1,2].map(i=>`<td>${esc(fmt(r?.picks?.[i]))}</td>`).join('')}<td>${c?`<b class="good">11/${c.day} ${esc(c.slot_time)} 확정</b>`:'—'}</td><td>${r?(r.source==='admin'?'관리자 조정':'회사 제출'):'미입력'}</td></tr>`}).join('');
- $('auditRows').innerHTML=(data.audit||[]).map(a=>`<tr><td>${new Date(a.created_at).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})}</td><td>${esc(a.operation)}</td><td>${esc(a.company||'시간 개방 설정')}</td></tr>`).join('')||'<tr><td colspan="3">변경 이력 없음</td></tr>';
- $('status').textContent='마지막 갱신 '+new Date().toLocaleTimeString('ko-KR')+' · 10초 자동 조회';
- updateRuleState();
+
+function showMessage(id,message,isError=false) {
+  const target = el(id);
+  target.textContent = message;
+  target.className =
+    "message " + (isError ? "error":"success");
 }
-function fillEditor(){const r=data.responses.find(x=>x.company===$('editCompany').value);for(let i=0;i<3;i++){const p=r?.picks?.[i];$(`editDay${i}`).value=p?.day||3;$(`editTime${i}`).value=p?.time||times[i];$(`editTime${i}`).syncVisual?.();}setMessage('editMsg','')}
-function updateRuleState(){const d=+$('ruleDay').value,t=$('ruleTime').value;if(!d||!t)return;$('ruleState').textContent=`현재: ${ruleOpen(d,t)?'선택 가능':'선택 불가'}`}
-async function reload(){if(!db)return;const {data:result,error}=await db.rpc('admin_debrief_snapshot');if(error){$('status').textContent='조회 실패: '+error.message;return}data=result||data;render()}
-async function action(name,args,msg){const {data:result,error}=await db.rpc(name,args);if(error)throw error;if(result!=='ok')throw new Error(result);await reload();return msg}
-function wire(){
- $('filter').innerHTML='<option value="">전체 회사</option>'+names.map(n=>`<option>${esc(n)}</option>`).join('');
- for(const id of ['editCompany','confirmCompany'])optsSelect(id,names.map(n=>`<option>${esc(n)}</option>`).join(''));
- for(const id of ['confirmDay','ruleDay'])optsSelect(id,dayOptions());
- for(const id of ['confirmTime','ruleTime'])optsSelect(id,timeOptions());
- $('pickEditors').innerHTML=Array.from({length:3},(_,i)=>`<div><label>${i+1}순위</label><select class="field" id="editDay${i}">${dayOptions()}</select><select class="field" id="editTime${i}">${timeOptions()}</select></div>`).join('');
- for(const id of ['confirmTime','ruleTime','editTime0','editTime1','editTime2'])timeDropdown(id);
- $('editCompany').onchange=fillEditor;$('fillCurrent').onclick=fillEditor;
- $('filter').onchange=render;$('refresh').onclick=reload;
- $('ruleDay').onchange=updateRuleState;$('ruleTime').onchange=updateRuleState;
- $('savePicks').onclick=async()=>{const picks=Array.from({length:3},(_,i)=>({day:+$(`editDay${i}`).value,time:$(`editTime${i}`).value}));
- if(new Set(picks.map(p=>`${p.day}-${p.time}`)).size!==3){setMessage('editMsg','세 순위에는 서로 다른 시간을 선택해야 합니다.');return}
- if(!confirm(`${$('editCompany').value}의 1~3순위 일정을 저장하시겠습니까?`))return;
- try{setMessage('editMsg','저장 중…');await action('admin_debrief_save_picks',{p_company:$('editCompany').value,p_picks:picks});setMessage('editMsg','저장했습니다.',true)}catch(e){setMessage('editMsg','저장 오류: '+e.message)} };
- $('saveConfirm').onclick=async()=>{const company=$('confirmCompany').value,day=+$('confirmDay').value,time=$('confirmTime').value;if(!confirm(`${company} → 11/${day} ${time} 확정하시겠습니까?`))return;
- try{await action('admin_debrief_confirm',{p_company:company,p_day:day,p_time:time});setMessage('confirmMsg','확정했습니다.',true)}catch(e){setMessage('confirmMsg','확정 오류: '+e.message)}};
- $('clearConfirm').onclick=async()=>{if(!confirm(`${$('confirmCompany').value}의 확정을 해제하시겠습니까?`))return;try{await action('admin_debrief_confirm',{p_company:$('confirmCompany').value,p_day:null,p_time:null});setMessage('confirmMsg','확정을 해제했습니다.',true)}catch(e){setMessage('confirmMsg','오류: '+e.message)}};
- for(const [id,is_open] of [['openSlot',true],['closeSlot',false]])$(id).onclick=async()=>{const day=+$('ruleDay').value,time=$('ruleTime').value;if(!confirm(`11/${day} ${time}을 ${is_open?'선택 가능':'선택 불가'}로 변경하시겠습니까?`))return;
- try{await action('admin_debrief_set_slot',{p_day:day,p_time:time,p_open:is_open});setMessage('ruleMsg','변경했습니다.',true)}catch(e){setMessage('ruleMsg','변경 오류: '+e.message)}};
- $('logout').onclick=async()=>{clearInterval(timer);if(channel)await db.removeChannel(channel);await db.auth.signOut();location.reload()};
- fillEditor();
+
+function allTimes() {
+  return HOURS.flatMap(
+    hour => MINUTES.map(
+      minute => hour + ":" + minute
+    )
+  );
 }
-async function enter(){const {data:ud,error:ue}=await db.auth.getUser();if(ue)throw ue;const user=ud?.user;
- if(!user||user.is_anonymous)return;
- const {data:admin,error:ae}=await db.from('debrief_admins').select('user_id').eq('user_id',user.id).maybeSingle();if(ae)throw ae;
- if(!admin)throw new Error('관리자 권한이 없습니다. debrief_admins 등록 상태를 확인하세요.');
- $('login').style.display='none';$('app').style.display='block';$('logout').style.display='block';await reload();
- if(!timer)timer=setInterval(reload,10000);
- if(!channel)channel=db.channel('debrief-admin-manager').on('postgres_changes',{event:'*',schema:'public',table:'debrief_responses'},reload).subscribe();
+
+function selectedTime(prefix) {
+  return el(prefix+"Hour").value +
+    ":" + el(prefix+"Minute").value;
 }
-async function login(){const button=$('loginBtn');button.disabled=true;button.textContent='로그인 확인 중…';$('loginMsg').textContent='';try{
- const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;
- await enter();
- }catch(e){$('loginMsg').textContent=e.message}finally{button.disabled=false;button.textContent='로그인'}}
-function start(){
- try{if(!window.supabase)throw new Error('Supabase 라이브러리를 불러오지 못했습니다.');db=window.supabase.createClient(URL,KEY,{auth:{storageKey:'debrief-admin-2026-auth'}});
- wire();$('loginBtn').onclick=login;for(const id of ['email','password'])$(id).onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();login()}};
- enter().catch(e=>{$('loginMsg').textContent=e.message});
- }catch(e){$('loginMsg').textContent='초기화 오류: '+e.message}}
-const cdns=['https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js'];
-function loadLib(i=0){if(window.supabase?.createClient){start();return}if(i>=cdns.length){$('loginMsg').textContent='라이브러리 연결 실패: 회사 네트워크에서 CDN 접근을 확인해 주세요.';return}const s=document.createElement('script');s.src=cdns[i];s.onload=()=>window.supabase?.createClient?start():loadLib(i+1);s.onerror=()=>loadLib(i+1);document.head.appendChild(s)}loadLib();
-</script></body></html>
+
+function setSelectedTime(prefix,value) {
+  const time = value || "09:00";
+  const [hour,minute] = time.split(":");
+
+  el(prefix+"Hour").value = hour;
+  el(prefix+"Minute").value = minute;
+}
+
+function dayOptions() {
+  return Array.from(
+    {length:30},
+    (_,i) => {
+      const day = i+1;
+      const weekday =
+        WEEKDAYS[new Date(2026,10,day).getDay()];
+
+      return `<option value="${day}">
+        11월 ${day}일 (${weekday})
+      </option>`;
+    }
+  ).join("");
+}
+
+function fillTimeSelectors(prefix) {
+  el(prefix+"Hour").innerHTML =
+    HOURS.map(
+      hour => `<option value="${hour}">
+        ${Number(hour)}시
+      </option>`
+    ).join("");
+
+  el(prefix+"Minute").innerHTML =
+    MINUTES.map(
+      minute => `<option value="${minute}">
+        ${minute}분
+      </option>`
+    ).join("");
+}
+
+function findResponse(company) {
+  return snapshot.responses.find(
+    item => item.company === company
+  );
+}
+
+function findConfirmation(company) {
+  return snapshot.confirmations.find(
+    item => item.company === company
+  );
+}
+
+function isOpen(day,time) {
+  const rule = snapshot.rules.find(
+    item =>
+      Number(item.day) === Number(day) &&
+      item.slot_time === time
+  );
+
+  return rule
+    ? rule.is_open
+    : OPEN_DAYS.includes(Number(day));
+}
+
+function formatPick(pick) {
+  if(!pick) return "—";
+  return `11/${pick.day} ${pick.time}`;
+}
+
+/* ====================================
+   화면 초기화
+==================================== */
+
+function initializeSelectors() {
+  const companyOptions = COMPANIES.map(
+    name =>
+      `<option value="${escapeHtml(name)}">
+        ${escapeHtml(name)}
+      </option>`
+  ).join("");
+
+  el("companyFilter").innerHTML =
+    '<option value="">전체 회사</option>' +
+    companyOptions;
+
+  el("editCompany").innerHTML =
+    companyOptions;
+
+  el("confirmCompany").innerHTML =
+    companyOptions;
+
+  ["confirmDay","ruleDay"].forEach(
+    id => el(id).innerHTML = dayOptions()
+  );
+
+  ["confirm","rule"].forEach(
+    prefix => fillTimeSelectors(prefix)
+  );
+
+  el("priorityEditors").innerHTML =
+    [1,2,3].map(rank => `
+      <div class="priority">
+        <div class="priority-title">
+          ${rank}순위 희망 일정
+        </div>
+
+        <label>날짜</label>
+        <select id="pickDay${rank}">
+          ${dayOptions()}
+        </select>
+
+        <label>시간</label>
+        <div class="time-pair">
+          <select id="pick${rank}Hour"></select>
+          <select id="pick${rank}Minute"></select>
+        </div>
+      </div>
+    `).join("");
+
+  [1,2,3].forEach(
+    rank => fillTimeSelectors("pick"+rank)
+  );
+
+  fillExistingPicks();
+}
+
+/* ====================================
+   캘린더 렌더링
+==================================== */
+
+function renderCalendar() {
+  const filter = el("companyFilter").value;
+
+  const responses = snapshot.responses.filter(
+    item => !filter || item.company === filter
+  );
+
+  const confirmations =
+    snapshot.confirmations.filter(
+      item => !filter || item.company === filter
+    );
+
+  el("weekdays").innerHTML =
+    WEEKDAYS.map(
+      day => `<div class="weekday">${day}</div>`
+    ).join("");
+
+  let html = "";
+
+  for(let day=1;day<=35;day++) {
+    if(day>30) {
+      html += "<div></div>";
+      continue;
+    }
+
+    const dayEntries = [];
+
+    responses.forEach(response => {
+      (response.picks || []).forEach(
+        (pick,index) => {
+          if(Number(pick.day) === day) {
+            dayEntries.push({
+              company:response.company,
+              time:pick.time,
+              rank:index+1
+            });
+          }
+        }
+      );
+    });
+
+    dayEntries.sort(
+      (a,b) => a.time.localeCompare(b.time)
+    );
+
+    const dayConfirmations =
+      confirmations.filter(
+        item => Number(item.day) === day
+      );
+
+    const openCount = allTimes().filter(
+      time => isOpen(day,time)
+    ).length;
+
+    const confirmedHtml =
+      dayConfirmations.map(item => `
+        <div class="entry confirmed">
+          <b>확정 ${escapeHtml(item.slot_time)}</b>
+          <div>${escapeHtml(item.company)}</div>
+        </div>
+      `).join("");
+
+    const entriesHtml =
+      dayEntries.map(item => `
+        <div class="entry rank${item.rank}">
+          <b>
+            ${escapeHtml(item.time)}
+            · ${item.rank}순위
+          </b>
+          <div>
+            ${escapeHtml(item.company)}
+          </div>
+        </div>
+      `).join("");
+
+    html += `
+      <div class="day ${openCount===0?"closed":""}">
+        <div class="day-head">
+          <b>${day}일</b>
+          <span class="count">
+            ${openCount}개 시간 개방
+          </span>
+        </div>
+        ${confirmedHtml}
+        ${entriesHtml}
+      </div>
+    `;
+  }
+
+  el("calendar").innerHTML = html;
+}
+
+/* ====================================
+   통계 및 회사별 테이블
+==================================== */
+
+function renderTables() {
+  const responses = snapshot.responses;
+  const confirmations = snapshot.confirmations;
+
+  el("submittedCount").textContent =
+    responses.length + " / 11";
+
+  el("pendingCount").textContent =
+    11 - responses.length;
+
+  el("confirmedCount").textContent =
+    confirmations.length;
+
+  el("picksCount").textContent =
+    responses.reduce(
+      (sum,item) =>
+        sum + (item.picks || []).length,
+      0
+    );
+
+  const filter = el("companyFilter").value;
+
+  el("companyTable").innerHTML =
+    COMPANIES.filter(
+      company => !filter || company === filter
+    ).map(company => {
+      const response = findResponse(company);
+      const confirmation =
+        findConfirmation(company);
+
+      const picks = response?.picks || [];
+
+      return `
+        <tr>
+          <td><b>${escapeHtml(company)}</b></td>
+          ${[0,1,2].map(index => `
+            <td>
+              ${escapeHtml(formatPick(picks[index]))}
+            </td>
+          `).join("")}
+          <td>
+            ${confirmation
+              ? `<b class="success">
+                   11/${confirmation.day}
+                   ${escapeHtml(confirmation.slot_time)}
+                   확정
+                 </b>`
+              : "—"}
+          </td>
+          <td>
+            ${response
+              ? response.source === "admin"
+                ? "관리자 조정"
+                : "회사 제출"
+              : "미입력"}
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+  el("auditTable").innerHTML =
+    (snapshot.audit || []).map(item => `
+      <tr>
+        <td>
+          ${new Date(item.created_at)
+            .toLocaleString("ko-KR",{
+              timeZone:"Asia/Seoul"
+            })}
+        </td>
+        <td>${escapeHtml(item.operation)}</td>
+        <td>
+          ${escapeHtml(item.company || "시간 설정")}
+        </td>
+      </tr>
+    `).join("") ||
+    '<tr><td colspan="3">변경 기록 없음</td></tr>';
+}
+
+function updateRuleState() {
+  const day = Number(el("ruleDay").value);
+  const time = selectedTime("rule");
+
+  const confirmed = snapshot.confirmations.some(
+    item =>
+      Number(item.day)===day &&
+      item.slot_time===time
+  );
+
+  el("ruleState").textContent =
+    `현재: ${isOpen(day,time)
+      ? "선택 가능"
+      : "선택 불가"}`
+    + (confirmed ? " · 확정된 시간":"");
+}
+
+function render() {
+  renderCalendar();
+  renderTables();
+  updateRuleState();
+
+  el("refreshStatus").textContent =
+    "마지막 갱신: " +
+    new Date().toLocaleTimeString("ko-KR") +
+    " · 10초 자동 조회";
+}
+
+/* ====================================
+   Supabase 데이터 조회
+==================================== */
+
+async function refreshData() {
+  if(!db) return;
+
+  const {data,error} =
+    await db.rpc("admin_debrief_snapshot");
+
+  if(error) {
+    el("refreshStatus").textContent =
+      "데이터 조회 오류: " + error.message;
+    return;
+  }
+
+  snapshot = data || {
+    responses:[],
+    confirmations:[],
+    rules:[],
+    audit:[]
+  };
+
+  render();
+}
+
+async function callAdminFunction(name,args) {
+  const {data,error} = await db.rpc(name,args);
+
+  if(error) throw error;
+
+  if(data !== "ok") {
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : "저장되지 않았습니다."
+    );
+  }
+
+  await refreshData();
+}
+
+/* ====================================
+   희망 일정 직접 입력 및 수정
+==================================== */
+
+function fillExistingPicks() {
+  const company = el("editCompany").value;
+  const response = findResponse(company);
+  const picks = response?.picks || [];
+
+  [1,2,3].forEach(rank => {
+    const pick = picks[rank-1];
+
+    el("pickDay"+rank).value =
+      pick ? String(pick.day) : "3";
+
+    setSelectedTime(
+      "pick"+rank,
+      pick?.time || allTimes()[rank-1]
+    );
+  });
+
+  showMessage("editMsg","");
+}
+
+async function savePicks() {
+  const company = el("editCompany").value;
+
+  const picks = [1,2,3].map(rank => ({
+    day:Number(el("pickDay"+rank).value),
+    time:selectedTime("pick"+rank)
+  }));
+
+  const unique = new Set(
+    picks.map(
+      item => `${item.day}-${item.time}`
+    )
+  );
+
+  if(unique.size !== 3) {
+    showMessage(
+      "editMsg",
+      "1·2·3순위는 서로 다른 일정이어야 합니다.",
+      true
+    );
+    return;
+  }
+
+  if(!confirm(
+    company + "의 희망 일정을 저장하시겠습니까?"
+  )) return;
+
+  try {
+    await callAdminFunction(
+      "admin_debrief_save_picks",
+      {
+        p_company:company,
+        p_picks:picks
+      }
+    );
+
+    showMessage(
+      "editMsg",
+      "희망 일정이 저장되었습니다."
+    );
+
+  } catch(error) {
+    showMessage(
+      "editMsg",
+      "저장 실패: " + error.message,
+      true
+    );
+  }
+}
+
+/* ====================================
+   최종 일정 확정 및 해제
+==================================== */
+
+async function saveConfirmation() {
+  const company = el("confirmCompany").value;
+  const day = Number(el("confirmDay").value);
+  const time = selectedTime("confirm");
+
+  if(!confirm(
+    `${company}의 최종 일정을
+11월 ${day}일 ${time}으로 확정하시겠습니까?`
+  )) return;
+
+  try {
+    await callAdminFunction(
+      "admin_debrief_confirm",
+      {
+        p_company:company,
+        p_day:day,
+        p_time:time
+      }
+    );
+
+    showMessage(
+      "confirmMsg",
+      "최종 일정이 확정되었습니다."
+    );
+
+  } catch(error) {
+    showMessage(
+      "confirmMsg",
+      "확정 실패: " + error.message,
+      true
+    );
+  }
+}
+
+async function clearConfirmation() {
+  const company = el("confirmCompany").value;
+
+  if(!confirm(
+    company + "의 최종 확정을 해제하시겠습니까?"
+  )) return;
+
+  try {
+    await callAdminFunction(
+      "admin_debrief_confirm",
+      {
+        p_company:company,
+        p_day:null,
+        p_time:null
+      }
+    );
+
+    showMessage(
+      "confirmMsg",
+      "최종 확정이 해제되었습니다."
+    );
+
+  } catch(error) {
+    showMessage(
+      "confirmMsg",
+      "해제 실패: " + error.message,
+      true
+    );
+  }
+}
+
+/* ====================================
+   선택 가능 및 불가 변경
+==================================== */
+
+async function changeSlot(open) {
+  const day = Number(el("ruleDay").value);
+  const time = selectedTime("rule");
+
+  const label = open
+    ? "선택 가능"
+    : "선택 불가";
+
+  if(!confirm(
+    `11월 ${day}일 ${time}을
+${label} 상태로 변경하시겠습니까?`
+  )) return;
+
+  try {
+    await callAdminFunction(
+      "admin_debrief_set_slot",
+      {
+        p_day:day,
+        p_time:time,
+        p_open:open
+      }
+    );
+
+    showMessage(
+      "ruleMsg",
+      label + " 상태로 변경했습니다."
+    );
+
+  } catch(error) {
+    showMessage(
+      "ruleMsg",
+      "변경 실패: " + error.message,
+      true
+    );
+  }
+}
+
+/* ====================================
+   관리자 인증
+==================================== */
+
+async function showDashboard() {
+  const {data:authData,error:authError} =
+    await db.auth.getUser();
+
+  if(authError) throw authError;
+
+  const user = authData?.user;
+
+  if(!user || user.is_anonymous) {
+    return;
+  }
+
+  const {data:admin,error:roleError} =
+    await db
+      .from("debrief_admins")
+      .select("user_id")
+      .eq("user_id",user.id)
+      .maybeSingle();
+
+  if(roleError) throw roleError;
+
+  if(!admin) {
+    throw new Error(
+      "관리자 권한이 없습니다. " +
+      "debrief_admins 등록을 확인하세요."
+    );
+  }
+
+  el("login").style.display = "none";
+  el("dashboard").style.display = "block";
+  el("logout").style.display = "block";
+
+  await refreshData();
+
+  if(!refreshTimer) {
+    refreshTimer = setInterval(
+      refreshData,
+      10000
+    );
+  }
+
+  if(!realtimeChannel) {
+    realtimeChannel = db
+      .channel("debrief-admin-realtime")
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"debrief_responses"
+        },
+        refreshData
+      )
+      .subscribe();
+  }
+}
+
+async function login() {
+  const button = el("loginBtn");
+
+  button.disabled = true;
+  button.textContent = "로그인 중…";
+  el("loginMsg").textContent = "";
+
+  try {
+    const email = el("email").value.trim();
+    const password = el("password").value;
+
+    if(!email || !password) {
+      throw new Error(
+        "이메일과 비밀번호를 입력해 주세요."
+      );
+    }
+
+    const {error} =
+      await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if(error) throw error;
+
+    await showDashboard();
+
+  } catch(error) {
+    el("loginMsg").textContent =
+      error.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = "로그인";
+  }
+}
+
+async function logout() {
+  if(refreshTimer) {
+    clearInterval(refreshTimer);
+    refreshTimer = null;
+  }
+
+  if(realtimeChannel) {
+    await db.removeChannel(realtimeChannel);
+    realtimeChannel = null;
+  }
+
+  await db.auth.signOut();
+  location.reload();
+}
+
+/* ====================================
+   버튼 연결
+==================================== */
+
+function bindEvents() {
+  el("loginBtn").onclick = login;
+  el("logout").onclick = logout;
+
+  ["email","password"].forEach(id => {
+    el(id).addEventListener(
+      "keydown",
+      event => {
+        if(event.key === "Enter") {
+          event.preventDefault();
+          login();
+        }
+      }
+    );
+  });
+
+  el("refreshBtn").onclick = refreshData;
+
+  el("companyFilter").onchange = render;
+
+  el("editCompany").onchange =
+    fillExistingPicks;
+
+  el("reloadPicksBtn").onclick =
+    fillExistingPicks;
+
+  el("savePicksBtn").onclick = savePicks;
+
+  el("confirmBtn").onclick =
+    saveConfirmation;
+
+  el("clearConfirmBtn").onclick =
+    clearConfirmation;
+
+  el("openBtn").onclick =
+    () => changeSlot(true);
+
+  el("closeBtn").onclick =
+    () => changeSlot(false);
+
+  ["ruleDay","ruleHour","ruleMinute"]
+    .forEach(id => {
+      el(id).onchange = updateRuleState;
+    });
+
+  el("confirmCompany").onchange = () => {
+    const current = findConfirmation(
+      el("confirmCompany").value
+    );
+
+    if(current) {
+      el("confirmDay").value =
+        String(current.day);
+
+      setSelectedTime(
+        "confirm",
+        current.slot_time
+      );
+    }
+  };
+}
+
+/* ====================================
+   외부 라이브러리 안정적 로딩
+==================================== */
+
+const SUPABASE_CDNS = [
+  "https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js",
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"
+];
+
+function loadSupabaseLibrary(index=0) {
+  if(window.supabase?.createClient) {
+    startApplication();
+    return;
+  }
+
+  if(index >= SUPABASE_CDNS.length) {
+    el("loginMsg").textContent =
+      "Supabase 연결 라이브러리를 불러오지 " +
+      "못했습니다. 네트워크를 확인해 주세요.";
+    return;
+  }
+
+  const script = document.createElement("script");
+
+  script.src = SUPABASE_CDNS[index];
+
+  script.onload = () => {
+    if(window.supabase?.createClient) {
+      startApplication();
+    } else {
+      loadSupabaseLibrary(index+1);
+    }
+  };
+
+  script.onerror = () => {
+    loadSupabaseLibrary(index+1);
+  };
+
+  document.head.appendChild(script);
+}
+
+/* ====================================
+   프로그램 시작
+==================================== */
+
+function startApplication() {
+  try {
+    const url = SUPABASE_URL.trim();
+
+    if(
+      !/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(url)
+    ) {
+      throw new Error(
+        "Supabase URL 설정을 확인해 주세요."
+      );
+    }
+
+    db = window.supabase.createClient(
+      url,
+      SUPABASE_KEY,
+      {
+        auth:{
+          persistSession:true,
+          storageKey:"debrief-admin-2026-auth"
+        }
+      }
+    );
+
+    initializeSelectors();
+    bindEvents();
+
+    showDashboard().catch(error => {
+      el("loginMsg").textContent =
+        error.message;
+    });
+
+  } catch(error) {
+    el("loginMsg").textContent =
+      "초기화 오류: " + error.message;
+  }
+}
+
+loadSupabaseLibrary();
+
+</script>
+</body>
+</html>
