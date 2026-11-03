@@ -1,131 +1,47 @@
-<!DOCTYPE html>
-<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>2026 조직진단 디브리핑 일정</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026 조직진단 디브리핑 · 확정 일정 회신</title>
 <style>
-:root{--ink:#1c1c1e;--muted:#6b6f7e;--line:#e0e2e8;--bg:#f7f8fa;--blue:#4262ff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 'Pretendard','Noto Sans KR',system-ui,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.container{width:min(100%,540px);margin:auto;min-height:100vh;background:#fff;padding:25px 20px 35px}header{border-bottom:1px solid var(--line);padding-bottom:16px}.eyebrow{font-size:11px;color:var(--muted);letter-spacing:.6px}h1{font-size:22px;letter-spacing:-.7px;margin:9px 0}h2{font-size:20px;margin:5px 0 8px}p{margin:7px 0}.intro,.helper{color:#555a6a;font-size:13px}.helper{margin-bottom:18px}.info{background:var(--bg);border-radius:12px;padding:14px;margin:17px 0;font-size:12px}.info p{margin:6px 0}.info strong{display:inline-block;min-width:65px}.progress{height:4px;background:#eef0f3;border-radius:10px;margin:20px 0}.progress>div{height:100%;background:var(--ink);border-radius:10px;transition:width .2s}.caption{font-size:12px;color:var(--muted)}label{display:block;font-size:13px;font-weight:600;margin:14px 0 7px}input,select{width:100%;height:44px;border:1px solid #c7cad5;border-radius:8px;background:white;padding:0 12px;color:var(--ink)}
-.calendar-layout{display:grid;grid-template-columns:minmax(0,1fr) 151px;gap:9px;align-items:start}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}.weekday{font-size:11px;text-align:center;color:var(--muted);padding:6px 0}.day{height:38px;min-width:0;padding:0;background:white;border:1px solid var(--line);border-radius:7px;font-size:12px}.day:disabled{color:#b4b7c0;background:var(--bg);border-color:transparent;cursor:default}.day.active{background:#eef1ff;border:2px solid var(--blue);font-weight:600}.day.has-rank:after{content:'•';color:#4262ff;margin-left:2px}.times{border:1px solid var(--line);border-radius:11px;padding:9px;min-height:145px;animation:fadeIn .19s ease both}@keyframes fadeIn{from{opacity:0;transform:translateX(9px)}to{opacity:1;transform:translateX(0)}}.time-title{font-size:12px;font-weight:600;margin:0 0 6px}.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}.time{min-height:34px;background:#fff;border:1px solid var(--line);border-radius:7px;font-size:11px;padding:5px 1px}.time.taken{border:2px dashed #a5a8b5}.time.active{border:2px solid var(--blue);background:#eef1ff;font-weight:700}.time.previous{border:1px solid #b2b9d7;background:#f1f3fa;color:#29365f;font-weight:600}.time:disabled{cursor:default}.time small{font-size:9px;display:block}.legend{font-size:11px;color:var(--muted);margin-top:12px}.legend span{white-space:nowrap}.legend i{display:inline-block;width:10px;height:10px;border:2px dashed #a5a8b5;border-radius:3px;vertical-align:middle;margin-right:3px}.legend b{background:#edf0fb;color:#29365f;border-radius:3px;padding:2px 4px;font-size:10px}
-.summary{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:20px}.summary-title{font-weight:600;font-size:13px}.summary-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eef0f3;font-size:12px}.summary-row:last-child{border:0}.summary-row span:first-child{color:var(--muted);white-space:nowrap}.summary-row span:last-child{text-align:right}.actions{display:flex;gap:8px;margin-top:20px}.action{border:0;border-radius:999px;padding:13px 18px;font-size:14px}.primary{background:var(--ink);color:white;flex:1}.secondary{background:var(--bg);color:var(--ink)}.action:disabled{background:#e0e2e8;color:#a5a8b5;cursor:not-allowed}.notice{font-size:12px;color:var(--muted);margin-top:20px}.notice ul{padding-left:18px}.notice li{margin:5px 0}.error{color:#b42318;font-size:12px;margin-top:12px;overflow-wrap:anywhere}.complete{text-align:center;padding:28px 0}.check{height:58px;width:58px;border-radius:50%;display:grid;place-items:center;background:#e4f7ee;color:#00885a;font-size:30px;margin:0 auto 16px}@media(max-width:400px){.container{padding:20px 12px}.calendar-layout{grid-template-columns:minmax(0,1fr) 133px;gap:6px}.day{height:34px}.times{padding:6px}.time{font-size:10px}h1{font-size:20px}}
-
-.calendar-heading{font-size:16px;font-weight:700;margin:3px 0 12px;color:#152544}.calendar-heading span{font-size:11px;color:#6b6f7e;font-weight:500;margin-left:8px}
-.required-label{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:5px;color:#7c3154;background:#fce9f2;font-size:11px;font-weight:700;vertical-align:baseline}
-/* 담당자용 핑크 → 네이비 그라데이션 헤더 */
-.container > header {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  margin: -25px -20px 0;
-  padding: 32px 25px 30px;
-  background: linear-gradient(115deg, #d87aa2 0%, #95537f 33%, #47375f 66%, #152544 100%);
-  color: #ffffff;
-  border: 0;
-  border-radius: 0 0 20px 20px;
-}
-.container > header::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
-  width: 210px; height: 210px;
-  top: -130px; right: -62px;
-  border-radius: 50%;
-  background: rgba(255, 223, 234, .16);
-  filter: blur(12px);
-}
-.container > header .eyebrow {color: rgba(255,255,255,.82);font-weight:600;letter-spacing:1.15px}
-.container > header h1 {color:#fff;line-height:1.3;margin:12px 0 11px;font-weight:700}
-.container > header .intro {color:rgba(255,255,255,.91);font-size:13px;line-height:1.7;max-width:440px}
-@media(max-width:400px){
-  .container > header{margin:-20px -12px 0;padding:28px 19px 26px}
-}
-.minute-row{display:flex;gap:6px}.minute-select{width:50%;min-width:0;border:1px solid #c7cad5;border-radius:8px;background:#fff;padding:10px 3px;font-size:12px}.minute-status{min-height:32px;color:var(--muted);font-size:11px;line-height:1.4}.minute-confirm{width:100%;border:0;border-radius:8px;padding:10px 4px;background:var(--ink);color:#fff;font-size:12px}.minute-confirm:disabled{background:#e0e2e8;color:#9a9da7;cursor:not-allowed}</style></head><body><main class="container">
-<header><div class="eyebrow">DONG-A SOCIO GROUP · 2026</div><h1>2026 조직진단 디브리핑 일정</h1><p class="intro">2026년 8월에 실시한 동아쏘시오그룹 조직진단 결과를 보고드리고자 합니다.</p></header>
-<section class="info"><p><strong>보고 목적</strong> 2026 동아쏘시오그룹 조직진단 결과 디브리핑</p><p><strong>보고 내용</strong> 조직진단 분석결과, 원인탐색결과, 개선활동 제안</p><p><strong>보고 시간</strong> 30분 ~ 1시간</p><p><strong>보고 대상</strong> 대표님, HR 실장님, 조직문화 담당 팀장님 <span class="required-label">필수</span></p></section>
-<div class="progress"><div id="progress" style="width:20%"></div></div><section id="content"></section><div id="actions" class="actions"><button id="back" class="action secondary" type="button">이전 단계</button><button id="next" class="action primary" type="button">다음 단계</button></div>
-<section class="summary" id="summary"></section><section class="notice"><strong>참고사항</strong><ul><li>타사에는 회사명을 공개하지 않습니다.</li><li>점선으로 표기한 시간도 선택 가능하나, 추후에 조정이 있을 수 있습니다.</li><li>제출 후 일정 변경은 담당 관리자에게 요청해 주시기 바랍니다.</li></ul></section>
+:root{--navy:#172747;--pink:#c96e99;--ink:#25293a;--muted:#6b7180;--line:#e2e5ee;--bg:#f6f7fa;--blue:#3859b7}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px/1.65 system-ui,'Noto Sans KR',sans-serif;color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer}main{max-width:570px;min-height:100vh;background:white;margin:auto;padding:0 23px 42px}header{background:linear-gradient(115deg,#d980a7,#704574 55%,#172747);color:#fff;margin:0 -23px 25px;padding:32px 25px;border-radius:0 0 22px 22px}header .eyebrow{font-size:11px;letter-spacing:1px;opacity:.8}h1{font-size:23px;margin:8px 0}header p{font-size:13px;opacity:.9;margin:6px 0}h2{font-size:19px;margin:0 0 12px}h3{font-size:16px;margin:8px 0 12px}.card{border:1px solid var(--line);border-radius:15px;padding:19px;margin-bottom:17px}.soft{background:#f7f8fc}.section-label{font-weight:700;margin:0 0 10px}.field{width:100%;border:1px solid #c7ccd6;border-radius:9px;background:#fff;color:var(--ink);padding:11px 12px;min-height:44px}textarea.field{resize:vertical;min-height:110px}label{display:block;font-weight:650;font-size:13px;margin:13px 0 6px}.required{color:#b72d5a;font-size:11px}button.primary{border:0;border-radius:12px;background:#172747;color:white;width:100%;padding:13px 15px;font-weight:700}button.secondary{border:1px solid var(--line);border-radius:10px;background:white;padding:9px 13px;color:var(--navy)}button:disabled{opacity:.55;cursor:not-allowed}.small{font-size:12px;color:var(--muted)}.error{font-size:12px;color:#b42318;white-space:pre-wrap;margin:12px 0}.success{font-size:12px;color:#0a7655}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 0}.row span:first-child{color:var(--muted);font-size:12px}.value{font-weight:700;text-align:right}.badge{background:#eff1f7;padding:3px 8px;border-radius:6px;font-size:11px;color:#526176}.report{border:1px solid #d7dff1;background:#f7faff;border-radius:12px;padding:15px;margin-top:10px}.report a{display:block;background:#344f9e;text-align:center;color:#fff;text-decoration:none;padding:11px;border-radius:10px;font-weight:700}.pw{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0}.pw code{font-size:16px;font-weight:800;letter-spacing:.8px}.note{color:var(--muted);font-size:12px;margin:8px 0}.thanks{padding:12px;border-radius:10px;background:#e9f8ef;color:#17673b;font-size:13px}.hidden{display:none!important}.button-line{display:flex;justify-content:flex-end;margin-bottom:14px}.footnote{font-size:11px;color:#8890a0;margin-top:20px}@media(max-width:420px){main{padding:0 15px 30px}header{margin:0 -15px 20px;padding:27px 19px}h1{font-size:21px}.card{padding:15px}}
+</style></head>
+<body><main>
+<header><div class="eyebrow">DONG-A SOCIO GROUP · 2026</div><h1>조직진단·리더십다면진단 결과 디브리핑</h1><p>계열사별 확정 일정 · 조직경쟁력진단 보고서 · 사전 회신</p></header>
+<section class="card" id="loginCard"><h2>회사 확인</h2><p class="small">우리 회사의 확정 일정과 보고서 확인을 위해 기존 <b>숫자 4자리 인증코드</b>를 입력해 주세요.</p><label for="company">회사명 <span class="required">필수</span></label><select class="field" id="company"><option value="">회사를 선택하세요</option></select><label for="accessCode">회사 확인 인증코드 <span class="required">필수</span></label><input class="field" id="accessCode" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="숫자 4자리" type="text"><div style="height:17px"></div><button class="primary" id="verifyBtn" disabled>확정 일정 확인하기</button><p id="loginError" class="error" role="alert"></p></section>
+<section id="content" class="hidden"><div class="button-line"><button class="secondary" id="switchBtn">다른 회사 확인</button></div>
+<section class="card soft"><p class="section-label">확정된 디브리핑 일정</p><h2 id="companyName"></h2><div class="row"><span>확정 날짜</span><div class="value" id="confirmedDate"></div></div><div class="row"><span>확정 시간</span><div class="value" id="confirmedTime"></div></div><div class="row"><span>보고 목적</span><div class="value">조직진단, 리더십다면진단 결과 디브리핑</div></div><div class="row"><span>소요 시간 안내</span><div class="value">30분 ~ 1시간</div></div><p class="small">확정 일시에 변경이 필요한 경우 아래 요청사항에 기재해 주세요. 최종 일정 변경은 관리자 확인 후 반영됩니다.</p></section>
+<section class="card"><h3>각 사 조직경쟁력진단 보고서</h3><p class="note">각 사별로 부여된 <b>보고서 조회 인증코드</b>를 입력해야 보고서를 열람할 수 있습니다. 인증코드는 안내 이메일에서 확인해 주세요.</p><div id="reportArea" class="report"></div><p class="note">회사 확인 인증코드와 보고서 조회 인증코드는 서로 다릅니다. 보고서 조회 인증코드는 이메일로 별도 안내됩니다.</p></section>
+<section class="card"><h3>디브리핑 사전 회신</h3><form id="replyForm"><label for="place">보고 장소 <span class="required">필수</span></label><input class="field" id="place" maxlength="300" placeholder="예: 본사 3층 대회의실 / 화상회의" required><label for="attendees">참석 대상 <span class="required">필수</span></label><textarea class="field" id="attendees" maxlength="500" rows="3" placeholder="예: 대표님, HR 실장님, 조직문화 담당 팀장님" required></textarea><p class="small">권장 참석 대상: 대표님, HR 실장님, 조직문화 담당 팀장님 (필수)</p><label for="duration">희망 발표시간 <span class="required">필수</span></label><select class="field" id="duration" required><option value="">선택해 주세요</option><option>30분 이내</option><option>1시간 이내</option><option>상관없음</option></select><label for="requests">요청사항 (자유 입력)</label><textarea class="field" id="requests" maxlength="2000" rows="5" placeholder="진행 방식, 발표 내용, 일정 조정 등의 요청사항을 적어 주세요."></textarea><p class="small">회신 후 다시 접속하면 내용을 수정하여 재제출할 수 있습니다.</p><button class="primary" id="submitBtn" type="submit">회신 제출</button><p id="submitMsg" class="error" role="status"></p><div id="saved" class="thanks hidden">✓ 회신이 저장되었습니다. 관리자 페이지에서 확인할 수 있습니다.</div></form></section></section>
+<p class="footnote">디브리핑 안내 · 조직진단 분석결과, 원인탐색결과, 개선활동 제안</p>
 </main><script>
 'use strict';
 const SUPABASE_URL='https://evrawzvpnpoycknoadbq.supabase.co';
 const SUPABASE_KEY='sb_publishable_kQL9FANhvvov8t-nwG6sOw_F57tItPP';
 const COMPANIES=['동아제약','동아에스티','비티젠','에스티팜','동아 오츠카','용마로지스','동아참메드','동아 에코팩','한국신동공업','아벤종합건설','앱티스','디에이아이'];
-const TIMES=Array.from({length:18},(_,i)=>`${String(9+Math.floor(i/2)).padStart(2,'0')}:${i%2?'30':'00'}`);
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'debrief-company-2026-auth'}});
-const $=id=>document.getElementById(id);
-const state={step:0,company:'',code:'',day:null,picks:[null,null,null],occupied:new Set(),availability:new Set(),ready:false,busy:false,completed:false,error:'',rankMode:{2:'no',3:'no'}};
-const weekdays=['일','월','화','수','목','금','토'];
-const valid=d=>TIMES.some(t=>state.availability.has(`${d}|${t}`));
-const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function fmt(p){return p?`11월 ${p.day}일 (${weekdays[new Date(2026,10,p.day).getDay()]}) · ${p.time}`:'미선택'}
-function summary(){ $('summary').innerHTML='<div class="summary-title">응답 현황</div>'+`<div class="summary-row"><span>회사명</span><span>${esc(state.company||'미선택')}</span></div>`+state.picks.map((p,i)=>`<div class="summary-row"><span>${i+1}순위</span><span>${esc(fmt(p))}</span></div>`).join('') }
-function dayCalendar(){let s='<div class="calendar">'+weekdays.map(w=>`<div class="weekday">${w}</div>`).join('');for(let d=1;d<=35;d++){if(d>30){s+='<div></div>';continue}const marker=state.picks.some((p,i)=>i<state.step-1&&p?.day===d);s+=`<button type="button" class="day ${d===state.day?'active':''} ${marker?'has-rank':''}" data-day="${d}" ${valid(d)?'':'disabled'} aria-label="11월 ${d}일">${d}</button>`}return s+'</div>'}
-function timePanel(){
- if(!state.day)return '<div class="times"><p class="time-title">시간 선택</p><p class="caption">날짜를 선택하면 시간과 분을 선택할 수 있습니다.</p></div>';
- const rankIndex=state.step-1;
- const now=state.picks[rankIndex]?.day===state.day?state.picks[rankIndex].time:null;
- const hours=[...new Set(TIMES.map(t=>t.slice(0,2)))];
- const selected=now||TIMES.find(t=>state.availability.has(`${state.day}|${t}`))||'09:00';
- const hour=selected.slice(0,2),minute=selected.slice(3,5);
- const button=(field,values,current)=>`<select class="minute-select" data-${field} aria-label="${field==='hour'?'시간':'분'} 선택">${values.map(v=>`<option value="${v}" ${v===current?'selected':''}>${v}${field==='hour'?'시':'분'}</option>`).join('')}</select>`;
- const candidate=hour+':'+minute;
- const taken=state.occupied.has(`${state.day}|${candidate}`);
- const prev=state.picks.findIndex((pick,i)=>i!==rankIndex&&pick?.day===state.day&&pick?.time===candidate);
- const open=state.availability.has(`${state.day}|${candidate}`);
- return `<div class="times"><p class="time-title">11월 ${state.day}일</p><div class="minute-row">${button('hour',hours,hour)}${button('minute',['00','30'],minute)}</div><p class="minute-status">${prev>=0?`${prev+1}순위로 이미 선택한 시간입니다.`:!open?'선택 불가 시간입니다.':taken?'다른 회사도 희망한 시간입니다.':'선택 가능한 시간입니다.'}</p><button type="button" class="minute-confirm" data-confirm-time ${!open||prev>=0?'disabled':''}>${now===candidate?'선택된 시간':'이 시간 선택'}</button></div>`;
+const $=id=>document.getElementById(id);let db=null;let state={company:'',code:'',info:null,busy:false};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const weekday=['일','월','화','수','목','금','토'];
+function error(id,text){$(id).textContent=text||''}
+function setBusy(id,isBusy,text){$(id).disabled=isBusy;if(text)$(id).textContent=text}
+async function ensureAuth(){const {data,error:e}=await db.auth.getSession();if(e)throw e;if(data?.session)return;const {error}=await db.auth.signInAnonymously();if(error)throw Error('익명 인증을 사용할 수 없습니다. Supabase의 Anonymous Sign-ins 설정을 확인해 주세요. '+error.message)}
+async function rpcWithTimeout(name,args){const call=db.rpc(name,args);let timer;try{return await Promise.race([call,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('서버 응답이 지연됩니다. 잠시 후 다시 확인해 주세요.')),20000)})])}finally{clearTimeout(timer)}}
+function showCompany(info){
+ $('loginCard').classList.add('hidden');$('content').classList.remove('hidden');$('companyName').textContent=state.company;
+ const c=info.confirmed;
+ if(c){$('confirmedDate').textContent=`2026년 11월 ${c.day}일 (${weekday[new Date(2026,10,c.day).getDay()]})`;$('confirmedTime').textContent=c.time}
+ else{$('confirmedDate').textContent='아직 확정되지 않았습니다';$('confirmedTime').textContent='관리자 확정 대기'}
+ const area=$('reportArea');area.innerHTML='';
+ if(info.report_url && /^https:\/\/claude\.ai\/artifact\/[\w-]+$/.test(info.report_url)){
+  const a=document.createElement('a');a.href=info.report_url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='우리 회사 보고서 바로가기';area.appendChild(a);
+  const p=document.createElement('p');p.className='note';p.textContent='보고서 열람 시 안내 이메일에 기재된 보고서 조회 인증코드를 입력해 주세요.';area.appendChild(p);
+ }else{area.textContent='이 회사의 보고서 링크는 준비 중입니다. 관리자에게 문의해 주세요.'}
+ const r=info.reply||{};$('place').value=r.report_place||'';$('attendees').value=r.attendees||'대표님, HR 실장님, 조직문화 담당 팀장님';$('duration').value=r.presentation_duration||'';$('requests').value=r.requests||'';
+ $('submitBtn').disabled=!c;$('submitBtn').textContent='회신 제출';$('saved').classList.toggle('hidden',!r.updated_at);
+ error('submitMsg',c?'':'확정 일정이 등록된 후 회신할 수 있습니다.');
 }
-function render(){const {step,completed,busy}=state;$('progress').style.width=`${(step+1)*20}%`;let h='';if(completed){h='<div class="complete" role="status"><div class="check">✓</div><h2>회신이 완료되었습니다.</h2><p class="helper">희망 일정이 정상적으로 저장되었습니다.<br>변경이 필요한 경우 담당 관리자에게 문의해 주세요.</p></div>'}
-else if(step===0){h=`<div class="caption">STEP 01 / 05</div><h2>회사를 선택해 주세요.</h2><p class="helper">회사명과 숫자 4자리 인증코드를 입력해 주세요.</p><label for="company">회사명</label><select id="company"><option value="">회사를 선택해 주세요</option>${COMPANIES.map(c=>`<option value="${esc(c)}" ${c===state.company?'selected':''}>${esc(c)}</option>`).join('')}</select><label for="code">인증코드</label><input id="code" type="text" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="숫자 4자리" value="${esc(state.code)}"><p class="caption">회사별로 전달받은 인증코드를 입력해 주세요.</p>`}
-else if(step<=3){h=`<div class="caption">STEP 0${step+1} / 05</div><h2>${step}순위 일정과 시간을 선택해 주세요.</h2><p class="helper">${step===1?"1순위는 필수입니다.":"추가 희망 일정이 없다면 아래에서 미선택을 선택해 주세요."} 날짜를 누른 뒤 시간과 분(00·30)을 선택하세요.</p>${step>=2?`<label for="optionalRank">${step}순위 입력 여부</label><select id="optionalRank"><option value="yes" ${state.rankMode[step]==="yes"?"selected":""}>일정 선택</option><option value="no" ${state.rankMode[step]!=="yes"?"selected":""}>미선택 (추가 일정 없음)</option></select>`:""}<div id="optionalCalendar" style="${step>=2&&state.rankMode[step]!=="yes"?"display:none":""}"><div class="calendar-heading">2026년 11월 <span>일정 선택</span></div><div class="calendar-layout">${dayCalendar()}${timePanel()}</div></div><div class="legend"><span><i></i>타사 선택 시간</span>　<span>마감: 선택 불가</span>　<span><b>1·2순위</b> 내가 앞서 선택한 시간</span></div>`}
-else{h='<div class="caption">STEP 05 / 05</div><h2>회신 내용을 확인해 주세요.</h2><p class="helper">제출 후 직접 수정할 수 없습니다. 선택하신 희망 일정을 확인해 주세요.</p>'}
-if(state.error)h+=`<p class="error" role="alert">${esc(state.error)}</p>`;$('content').innerHTML=h;$('actions').style.display=completed?'none':'flex';$('back').style.display=step===0?'none':'inline-block';$('next').textContent=busy?'처리 중...':step===0?'인증하고 시작하기':step<=3?(state.picks[step-1]?`${step}순위 선택완료`:step>=2?'미선택으로 계속':'날짜와 시간을 선택해 주세요'):'회신 제출';$('next').disabled=busy||!state.ready||(step===0?(!state.company||!/^[0-9]{4}$/.test(state.code)):step<=3?(step===1&&!state.picks[0]):false);
-if(step===0&&!completed){$('company').onchange=e=>{state.company=e.target.value;state.code='';state.picks=[null,null,null];state.rankMode={2:'no',3:'no'};state.error='';render()};$('code').oninput=e=>{state.code=e.target.value.replace(/\D/g,'').slice(0,4);e.target.value=state.code;$('next').disabled=!state.ready||!state.company||state.code.length!==4}}
-if(step>=2 && step<=3 && !completed){$('optionalRank').onchange=e=>{state.rankMode[step]=e.target.value;if(e.target.value==='no'){state.picks[step-1]=null;state.day=null;render()}else{state.day=state.picks[step-1]?.day??null;const area=$('optionalCalendar');if(area)area.style.display='block';$('next').textContent='날짜와 시간을 선택해 주세요';$('next').disabled=true;}};}
-document.querySelectorAll('[data-day]').forEach(el=>el.onclick=()=>{state.day=Number(el.dataset.day);state.error='';render()});document.querySelectorAll('[data-confirm-time]').forEach(el=>el.onclick=()=>{const time=document.querySelector('[data-hour]').value+':'+document.querySelector('[data-minute]').value;if(!state.availability.has(`${state.day}|${time}`)||state.picks.some((p,i)=>i!==state.step-1&&p?.day===state.day&&p?.time===time))return;state.picks[state.step-1]={day:state.day,time};if(state.step>=2)state.rankMode[state.step]='yes';state.error='';render()});document.querySelectorAll('[data-hour],[data-minute]').forEach(el=>el.onchange=()=>{const h=document.querySelector('[data-hour]').value,m=document.querySelector('[data-minute]').value;const t=h+':'+m;const idx=state.step-1;const prev=state.picks.findIndex((p,i)=>i!==idx&&p?.day===state.day&&p?.time===t);const open=state.availability.has(`${state.day}|${t}`);const status=document.querySelector('.minute-status'),confirm=document.querySelector('[data-confirm-time]');status.textContent=prev>=0?`${prev+1}순위로 이미 선택한 시간입니다.`:!open?'선택 불가 시간입니다.':state.occupied.has(`${state.day}|${t}`)?'다른 회사도 희망한 시간입니다.':'선택 가능한 시간입니다.';confirm.disabled=!open||prev>=0;confirm.textContent=state.picks[idx]?.day===state.day&&state.picks[idx]?.time===t?'선택된 시간':'이 시간 선택';});summary()}
-async function refreshOccupied(){if(!state.ready)return;try{const [occupied,available]=await Promise.all([db.rpc('occupied_slots'),db.rpc('debrief_available_slots')]);if(occupied.error)throw occupied.error;if(available.error)throw available.error;state.occupied=new Set((occupied.data||[]).map(x=>`${Number(x.day)}|${String(x.slot_time).slice(0,5)}`));state.availability=new Set((available.data||[]).filter(x=>x.is_open).map(x=>`${Number(x.day)}|${String(x.slot_time).slice(0,5)}`));if(state.step>=1&&state.step<=3&&!state.completed)render()}catch(e){state.error='일정 조회 실패: '+e.message;console.warn('일정 조회 실패:',e.message);render()}}
-async function next(){if(state.busy||state.completed||!state.ready)return;state.error='';if(state.step===0){if(!state.company||state.code.length!==4)return;state.busy=true;render();try{const {data,error}=await db.rpc('verify_debrief_invite',{p_company:state.company,p_code:state.code});if(error)throw error;if(data!=='ok')throw Error(data==='already_submitted'?'이미 제출이 완료된 회사입니다. 변경은 관리자에게 문의해 주세요.':data==='invalid_code'?'회사명 또는 인증코드가 올바르지 않습니다.':'인증 실패: '+data);state.step=1;state.day=null;await refreshOccupied()}catch(e){state.error=e.message}finally{state.busy=false;render()}return}
-if(state.step<=3){if(state.step>=2&&state.rankMode[state.step]==='no'){state.picks[state.step-1]=null;state.step=state.step===2?4:state.step+1;state.day=null;render();return;}if(!state.picks[state.step-1]||!state.availability.has(`${state.picks[state.step-1].day}|${state.picks[state.step-1].time}`)){state.error='해당 시간이 마감되었습니다. 다른 시간을 선택해 주세요.';render();return;}state.step++;state.day=state.step<=3?state.picks[state.step-1]?.day??null:null;render();return}
-state.busy=true;render();try{const {data,error}=await db.rpc('submit_debrief_invite',{p_company:state.company,p_code:state.code,p_picks:state.picks.filter(Boolean)});if(error)throw error;if(data!=='ok')throw Error(data==='already_submitted'?'이미 제출된 회사입니다.':data==='invalid_code'?'인증코드가 올바르지 않습니다.':data==='account_already_submitted'?'이미 제출에 사용된 계정입니다.':data==='invalid_schedule'?'희망 일정이 올바른지 확인해 주세요.':'제출 실패: '+data);state.completed=true;state.code=''}catch(e){state.error=e.message}finally{state.busy=false;render()}}
-$('next').onclick=next;$('back').onclick=()=>{if(state.step>0&&!state.busy){state.step=state.step===4&&!state.picks[1]?2:state.step-1;state.day=state.step>=1&&state.step<=3?state.picks[state.step-1]?.day??null:null;state.error='';render()}};
-async function init(){
-  render();
-  try {
-    const {data,error}=await db.auth.getSession();
-    if(error) throw error;
-    let session=data.session;
-    if(session){
-      // Previously submitted sessions should not force a completion screen
-      // on a shared device or on return visits.
-      const previous=await db.from('debrief_responses')
-        .select('user_id')
-        .eq('user_id',session.user.id)
-        .maybeSingle();
-      if(previous.error) throw previous.error;
-      if(previous.data){
-        const signedOut=await db.auth.signOut();
-        if(signedOut.error) throw signedOut.error;
-        session=null;
-      }
-    }
-    if(!session){
-      const signedIn=await db.auth.signInAnonymously();
-      if(signedIn.error) throw signedIn.error;
-      session=signedIn.data.session;
-    }
-    if(!session) throw Error('로그인 세션을 생성하지 못했습니다.');
-    state.completed=false;
-    state.step=0;
-    state.company='';
-    state.code='';
-    state.picks=[null,null,null];
-    state.day=null;
-    state.ready=true;
-    await refreshOccupied();
-  }catch(e){
-    state.error='서버 연결 오류: '+e.message;
-    console.error(e);
-  }
-  render();
-}
-init();setInterval(refreshOccupied,12000);
+async function verify(){if(state.busy||!db)return;const company=$('company').value;const code=$('accessCode').value.trim();if(!company||!/^[0-9]{4}$/.test(code)){error('loginError','회사와 숫자 4자리 인증코드를 확인해 주세요.');return}
+ state.busy=true;setBusy('verifyBtn',true,'확인 중…');error('loginError','');try{await ensureAuth();const {data,error:e}=await rpcWithTimeout('debrief_final_view',{p_company:company,p_code:code});if(e)throw e;state.company=company;state.code=code;state.info=data;showCompany(data)}catch(e){error('loginError',e.message)}finally{state.busy=false;setBusy('verifyBtn',false,'확정 일정 확인하기')}}
+async function submit(e){e.preventDefault();if(state.busy||!db||!state.info?.confirmed)return;const place=$('place').value.trim(),attendees=$('attendees').value.trim(),duration=$('duration').value,requests=$('requests').value.trim();if(!place||!attendees||!duration){error('submitMsg','보고 장소·참석 대상·희망 발표시간을 입력해 주세요.');return}
+ state.busy=true;setBusy('submitBtn',true,'저장 중…');error('submitMsg','');$('saved').classList.add('hidden');try{const {data,error:e}=await rpcWithTimeout('debrief_final_submit',{p_company:state.company,p_code:state.code,p_report_place:place,p_attendees:attendees,p_presentation_duration:duration,p_requests:requests});if(e)throw e;if(data!=='ok')throw Error(({invalid_code:'인증코드를 다시 확인해 주세요.',not_confirmed:'아직 확정 일정이 없습니다.',invalid_input:'입력 내용을 확인해 주세요.'})[data]||String(data));$('saved').classList.remove('hidden');error('submitMsg','');}catch(err){error('submitMsg','제출 확인 실패: '+err.message+' 저장 여부가 불확실할 때는 관리자 페이지에서 먼저 확인해 주세요.')}finally{state.busy=false;setBusy('submitBtn',false,'회신 제출')}}
+function initialize(){COMPANIES.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;$('company').appendChild(o)});$('accessCode').oninput=e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);$('verifyBtn').disabled=!db||!$('company').value||e.target.value.length!==4};$('company').onchange=()=>{$('verifyBtn').disabled=!db||!$('company').value||$('accessCode').value.length!==4};$('verifyBtn').onclick=verify;$('replyForm').onsubmit=submit;$('switchBtn').onclick=()=>{state={company:'',code:'',info:null,busy:false};$('content').classList.add('hidden');$('loginCard').classList.remove('hidden');$('accessCode').value='';$('company').value='';$('verifyBtn').disabled=true;error('loginError','')}}
+function loadLibrary(i=0){if(window.supabase?.createClient){try{db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,storageKey:'debrief-final-2026-auth'}});$('verifyBtn').disabled=true;}catch(e){error('loginError','초기화 오류: '+e.message)}return}const cdns=['https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js'];if(i>=cdns.length){error('loginError','Supabase 라이브러리를 불러오지 못했습니다. 네트워크를 확인해 주세요.');return}const s=document.createElement('script');s.src=cdns[i];s.onload=()=>window.supabase?.createClient?loadLibrary(i):loadLibrary(i+1);s.onerror=()=>loadLibrary(i+1);document.head.appendChild(s)}
+initialize();loadLibrary();
 </script></body></html>
