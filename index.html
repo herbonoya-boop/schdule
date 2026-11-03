@@ -1,14 +1,143 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026 조직진단 디브리핑 · 확정 일정 회신</title>
 <style>
-:root{--navy:#172747;--pink:#c96e99;--ink:#25293a;--muted:#6b7180;--line:#e2e5ee;--bg:#f6f7fa;--blue:#3859b7}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px/1.65 system-ui,'Noto Sans KR',sans-serif;color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer}main{max-width:570px;min-height:100vh;background:white;margin:auto;padding:0 23px 42px}header{background:linear-gradient(115deg,#d980a7,#704574 55%,#172747);color:#fff;margin:0 -23px 25px;padding:32px 25px;border-radius:0 0 22px 22px}header .eyebrow{font-size:11px;letter-spacing:1px;opacity:.8}h1{font-size:23px;margin:8px 0}header p{font-size:13px;opacity:.9;margin:6px 0}h2{font-size:19px;margin:0 0 12px}h3{font-size:16px;margin:8px 0 12px}.card{border:1px solid var(--line);border-radius:15px;padding:19px;margin-bottom:17px}.soft{background:#f7f8fc}.section-label{font-weight:700;margin:0 0 10px}.field{width:100%;border:1px solid #c7ccd6;border-radius:9px;background:#fff;color:var(--ink);padding:11px 12px;min-height:44px}textarea.field{resize:vertical;min-height:110px}label{display:block;font-weight:650;font-size:13px;margin:13px 0 6px}.required{color:#b72d5a;font-size:11px}button.primary{border:0;border-radius:12px;background:#172747;color:white;width:100%;padding:13px 15px;font-weight:700}button.secondary{border:1px solid var(--line);border-radius:10px;background:white;padding:9px 13px;color:var(--navy)}button:disabled{opacity:.55;cursor:not-allowed}.small{font-size:12px;color:var(--muted)}.error{font-size:12px;color:#b42318;white-space:pre-wrap;margin:12px 0}.success{font-size:12px;color:#0a7655}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 0}.row span:first-child{color:var(--muted);font-size:12px}.value{font-weight:700;text-align:right}.badge{background:#eff1f7;padding:3px 8px;border-radius:6px;font-size:11px;color:#526176}.report{border:1px solid #d7dff1;background:#f7faff;border-radius:12px;padding:15px;margin-top:10px}.report a{display:block;background:#344f9e;text-align:center;color:#fff;text-decoration:none;padding:11px;border-radius:10px;font-weight:700}.pw{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0}.pw code{font-size:16px;font-weight:800;letter-spacing:.8px}.note{color:var(--muted);font-size:12px;margin:8px 0}.thanks{padding:12px;border-radius:10px;background:#e9f8ef;color:#17673b;font-size:13px}.hidden{display:none!important}.button-line{display:flex;justify-content:flex-end;margin-bottom:14px}.footnote{font-size:11px;color:#8890a0;margin-top:20px}@media(max-width:420px){main{padding:0 15px 30px}header{margin:0 -15px 20px;padding:27px 19px}h1{font-size:21px}.card{padding:15px}}
+
+/* 2026 동아쏘시오그룹 담당자용 — 통합 디자인 */
+:root {
+  --navy:#172747;
+  --navy-deep:#111f3c;
+  --pink:#ca729a;
+  --ink:#222938;
+  --muted:#697386;
+  --line:#e2e5ed;
+  --soft:#f7f8fc;
+  --canvas:#f6f7f9;
+  --blue:#405f9e;
+  --success:#147d57;
+  --danger:#b93f4b;
+}
+*{box-sizing:border-box}
+html{font-size:15px;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  color:var(--ink);
+  background:var(--canvas);
+  font-family:'Pretendard Variable','Pretendard','Noto Sans KR',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Segoe UI',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  word-break:keep-all;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+main{
+  max-width:540px;
+  min-height:100vh;
+  margin:0 auto;
+  padding:0 20px 42px;
+  background:#fff;
+  box-shadow:0 8px 40px rgba(22,34,64,.055);
+}
+header{
+  position:relative;
+  margin:0 -20px 25px;
+  padding:32px 24px 33px;
+  color:#fff;
+  background:linear-gradient(115deg,#cf7fa6 0%,#a16b97 33%,#554676 67%,#172747 100%);
+  border-radius:0 0 20px 20px;
+}
+header .eyebrow{font-size:10px;font-weight:700;letter-spacing:1.1px;opacity:.88}
+header h1{font-size:23px;line-height:1.4;letter-spacing:-.6px;font-weight:750;margin:10px 0 8px}
+header p{font-size:12.5px;line-height:1.55;opacity:.94;margin:0}
+h2{font-size:20px;line-height:1.4;letter-spacing:-.4px;margin:0 0 13px;font-weight:750}
+h3{font-size:16px;line-height:1.5;letter-spacing:-.2px;margin:0 0 11px;font-weight:750}
+p{margin-top:0}
+.card{
+  margin-bottom:17px;
+  padding:21px 19px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 2px 9px rgba(30,41,65,.018);
+}
+.card.soft{background:#f7f8fc;border-color:#e6e9f1}
+.section-label{font-size:12px;letter-spacing:.1px;color:#657189;font-weight:750;margin:0 0 8px}
+.field{
+  appearance:auto;
+  display:block;
+  width:100%;
+  min-height:47px;
+  padding:11px 13px;
+  border:1px solid #cbd1dd;
+  border-radius:10px;
+  background:#fff;
+  color:var(--ink);
+  outline:0;
+  line-height:1.5;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.field:focus-visible{border-color:#576ea9;box-shadow:0 0 0 3px rgba(69,93,162,.11)}
+.field::placeholder{color:#9298a6}
+textarea.field{min-height:107px;resize:vertical;line-height:1.6}
+label{display:block;font-size:13px;font-weight:700;color:#394254;margin:15px 0 6px}
+.required{font-size:11px;font-weight:700;color:#c04c69;margin-left:3px}
+button.primary{
+  display:block;
+  width:100%;
+  min-height:48px;
+  padding:12px 15px;
+  border:0;
+  border-radius:12px;
+  background:var(--navy);
+  color:#fff;
+  font-size:14px;
+  font-weight:750;
+  letter-spacing:-.1px;
+  transition:background .18s ease,transform .12s ease;
+}
+button.primary:not(:disabled):hover{background:#263a63}
+button.primary:not(:disabled):active{transform:translateY(1px)}
+button.secondary{background:#fff;color:var(--navy);border:1px solid #d5dbe6;border-radius:10px;padding:9px 13px;font-size:12px;font-weight:650}
+button:disabled{opacity:.52;cursor:not-allowed}
+.small,.note{font-size:12px;color:var(--muted);line-height:1.65}
+.small{margin:7px 0 13px}
+.note{margin:9px 0}
+.error{min-height:1px;color:var(--danger);font-size:12px;line-height:1.6;white-space:pre-wrap;margin:12px 0 0}
+.success{color:var(--success);font-size:12px}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:10px 0;margin:0;border-bottom:1px solid #e9ebf1}
+.row:last-of-type{border-bottom:0}
+.row span:first-child{flex:0 0 85px;font-size:12px;color:var(--muted)}
+.value{min-width:0;flex:1;text-align:right;font-size:13px;font-weight:750;color:#263149;overflow-wrap:anywhere}
+#confirmedDate,#confirmedTime{font-size:15px;color:var(--navy-deep)}
+#confirmedTime{font-size:21px;letter-spacing:-.5px}
+#companyName{margin:0 0 10px;color:#1b294b}
+.report{margin:13px 0 0;border-radius:12px;padding:15px;background:#f7f9fe;border:1px solid #dfe5f2;color:#41506e;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.report a{display:block;border-radius:10px;background:#324e8b;color:#fff;font-weight:700;text-decoration:none;text-align:center;padding:12px 10px;transition:background .18s ease}
+.report a:hover{background:#1d3769}
+.report .note{margin:11px 0 0}
+.pw{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0}
+.pw code{font-size:16px;font-weight:800;letter-spacing:.8px}
+.thanks{margin-top:13px;padding:13px 14px;border-radius:10px;background:#eaf7f0;color:#176747;font-size:13px;font-weight:650}
+.hidden{display:none!important}
+.button-line{display:flex;justify-content:flex-end;margin:0 0 14px}
+.footnote{margin-top:19px;padding-bottom:10px;font-size:11px;color:#8991a0;line-height:1.6}
+#replyForm label:first-child{margin-top:2px}
+#replyForm .primary{margin-top:14px}
+@media(max-width:420px){
+  main{padding:0 15px 30px}
+  header{margin:0 -15px 21px;padding:27px 19px 30px}
+  header h1{font-size:21px}
+  .card{padding:17px 15px;border-radius:14px}
+  .row span:first-child{flex-basis:77px}
+  .value{font-size:12.5px}
+}
+@media(prefers-reduced-motion:reduce){.field,button.primary,.report a{transition:none}}
 </style></head>
 <body><main>
 <header><div class="eyebrow">DONG-A SOCIO GROUP · 2026</div><h1>조직진단·리더십다면진단 결과 디브리핑</h1><p>계열사별 확정 일정 · 조직경쟁력진단 보고서 · 사전 회신</p></header>
 <section class="card" id="loginCard"><h2>회사 확인</h2><p class="small">우리 회사의 확정 일정과 보고서 확인을 위해 기존 <b>숫자 4자리 인증코드</b>를 입력해 주세요.</p><label for="company">회사명 <span class="required">필수</span></label><select class="field" id="company"><option value="">회사를 선택하세요</option></select><label for="accessCode">회사 확인 인증코드 <span class="required">필수</span></label><input class="field" id="accessCode" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="숫자 4자리" type="text"><div style="height:17px"></div><button class="primary" id="verifyBtn" disabled>확정 일정 확인하기</button><p id="loginError" class="error" role="alert"></p></section>
 <section id="content" class="hidden"><div class="button-line"><button class="secondary" id="switchBtn">다른 회사 확인</button></div>
 <section class="card soft"><p class="section-label">확정된 디브리핑 일정</p><h2 id="companyName"></h2><div class="row"><span>확정 날짜</span><div class="value" id="confirmedDate"></div></div><div class="row"><span>확정 시간</span><div class="value" id="confirmedTime"></div></div><div class="row"><span>보고 목적</span><div class="value">조직진단, 리더십다면진단 결과 디브리핑</div></div><div class="row"><span>소요 시간 안내</span><div class="value">30분 ~ 1시간</div></div><p class="small">확정 일시에 변경이 필요한 경우 아래 요청사항에 기재해 주세요. 최종 일정 변경은 관리자 확인 후 반영됩니다.</p></section>
-<section class="card"><h3>각 사 조직경쟁력진단 보고서</h3><p class="note">각 사별로 부여된 <b>보고서 조회 인증코드</b>를 입력해야 보고서를 열람할 수 있습니다. 인증코드는 안내 이메일에서 확인해 주세요.</p><div id="reportArea" class="report"></div><p class="note">회사 확인 인증코드와 보고서 조회 인증코드는 서로 다릅니다. 보고서 조회 인증코드는 이메일로 별도 안내됩니다.</p></section>
+<section class="card"><h3>각 사 조직경쟁력진단 보고서</h3><p class="note">각 사별로 부여된 <b>보고서 조회 인증코드</b>를 입력해야 해당 회사의 보고서를 열람할 수 있습니다. 인증코드는 안내 이메일에서 확인해 주세요.</p><div id="reportArea" class="report"></div><p class="note">회사 확인 인증코드와 보고서 조회 인증코드는 서로 다릅니다. 보고서 조회 인증코드는 이메일로 별도 안내됩니다.</p></section>
 <section class="card"><h3>디브리핑 사전 회신</h3><form id="replyForm"><label for="place">보고 장소 <span class="required">필수</span></label><input class="field" id="place" maxlength="300" placeholder="예: 본사 3층 대회의실 / 화상회의" required><label for="attendees">참석 대상 <span class="required">필수</span></label><textarea class="field" id="attendees" maxlength="500" rows="3" placeholder="예: 대표님, HR 실장님, 조직문화 담당 팀장님" required></textarea><p class="small">권장 참석 대상: 대표님, HR 실장님, 조직문화 담당 팀장님 (필수)</p><label for="duration">희망 발표시간 <span class="required">필수</span></label><select class="field" id="duration" required><option value="">선택해 주세요</option><option>30분 이내</option><option>1시간 이내</option><option>상관없음</option></select><label for="requests">요청사항 (자유 입력)</label><textarea class="field" id="requests" maxlength="2000" rows="5" placeholder="진행 방식, 발표 내용, 일정 조정 등의 요청사항을 적어 주세요."></textarea><p class="small">회신 후 다시 접속하면 내용을 수정하여 재제출할 수 있습니다.</p><button class="primary" id="submitBtn" type="submit">회신 제출</button><p id="submitMsg" class="error" role="status"></p><div id="saved" class="thanks hidden">✓ 회신이 저장되었습니다. 관리자 페이지에서 확인할 수 있습니다.</div></form></section></section>
 <p class="footnote">디브리핑 안내 · 조직진단 분석결과, 원인탐색결과, 개선활동 제안</p>
 </main><script>
@@ -42,6 +171,6 @@ async function verify(){if(state.busy||!db)return;const company=$('company').val
 async function submit(e){e.preventDefault();if(state.busy||!db||!state.info?.confirmed)return;const place=$('place').value.trim(),attendees=$('attendees').value.trim(),duration=$('duration').value,requests=$('requests').value.trim();if(!place||!attendees||!duration){error('submitMsg','보고 장소·참석 대상·희망 발표시간을 입력해 주세요.');return}
  state.busy=true;setBusy('submitBtn',true,'저장 중…');error('submitMsg','');$('saved').classList.add('hidden');try{const {data,error:e}=await rpcWithTimeout('debrief_final_submit',{p_company:state.company,p_code:state.code,p_report_place:place,p_attendees:attendees,p_presentation_duration:duration,p_requests:requests});if(e)throw e;if(data!=='ok')throw Error(({invalid_code:'인증코드를 다시 확인해 주세요.',not_confirmed:'아직 확정 일정이 없습니다.',invalid_input:'입력 내용을 확인해 주세요.'})[data]||String(data));$('saved').classList.remove('hidden');error('submitMsg','');}catch(err){error('submitMsg','제출 확인 실패: '+err.message+' 저장 여부가 불확실할 때는 관리자 페이지에서 먼저 확인해 주세요.')}finally{state.busy=false;setBusy('submitBtn',false,'회신 제출')}}
 function initialize(){COMPANIES.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;$('company').appendChild(o)});$('accessCode').oninput=e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);$('verifyBtn').disabled=!db||!$('company').value||e.target.value.length!==4};$('company').onchange=()=>{$('verifyBtn').disabled=!db||!$('company').value||$('accessCode').value.length!==4};$('verifyBtn').onclick=verify;$('replyForm').onsubmit=submit;$('switchBtn').onclick=()=>{state={company:'',code:'',info:null,busy:false};$('content').classList.add('hidden');$('loginCard').classList.remove('hidden');$('accessCode').value='';$('company').value='';$('verifyBtn').disabled=true;error('loginError','')}}
-function loadLibrary(i=0){if(window.supabase?.createClient){try{db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,storageKey:'debrief-final-2026-auth'}});$('verifyBtn').disabled=true;}catch(e){error('loginError','초기화 오류: '+e.message)}return}const cdns=['https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js'];if(i>=cdns.length){error('loginError','Supabase 라이브러리를 불러오지 못했습니다. 네트워크를 확인해 주세요.');return}const s=document.createElement('script');s.src=cdns[i];s.onload=()=>window.supabase?.createClient?loadLibrary(i):loadLibrary(i+1);s.onerror=()=>loadLibrary(i+1);document.head.appendChild(s)}
+function loadLibrary(i=0){if(window.supabase?.createClient){try{db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,storageKey:'debrief-final-2026-auth'}});$('verifyBtn').disabled=!$('company').value||$('accessCode').value.length!==4;}catch(e){error('loginError','초기화 오류: '+e.message)}return}const cdns=['https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js'];if(i>=cdns.length){error('loginError','Supabase 라이브러리를 불러오지 못했습니다. 네트워크를 확인해 주세요.');return}const s=document.createElement('script');s.src=cdns[i];s.onload=()=>window.supabase?.createClient?loadLibrary(i):loadLibrary(i+1);s.onerror=()=>loadLibrary(i+1);document.head.appendChild(s)}
 initialize();loadLibrary();
 </script></body></html>
